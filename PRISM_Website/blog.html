@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Journal - PRISM Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow-x: hidden;
+            font-family: 'Courier New', monospace;
+            cursor: none;
+            min-height: 100vh;
+        }
+
+        .space-container {
+            position: fixed;
+            width: 100vw;
+            height: 200vh;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(0, 150, 255, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 60%, rgba(150, 50, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(255, 100, 150, 0.15) 0%, transparent 45%),
+                linear-gradient(135deg, #0a0f1c 0%, #1a2040 30%, #2a1f3a 60%, #1a1f3a 100%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: crystalTwinkle 5s infinite ease-in-out;
+        }
+
+        /* Ice Belt System */
+        .ice-belt-system {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 600px;
+            height: 600px;
+            animation: iceBeltRotate 45s linear infinite;
+        }
+
+        .ice-belt {
+            position: absolute;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            animation: iceBeltShimmer 8s ease-in-out infinite;
+        }
+
+        .ice-belt-outer {
+            width: 100%;
+            height: 100%;
+            border-image: linear-gradient(45deg, 
+                rgba(200, 250, 255, 0.6) 0%,
+                rgba(150, 200, 255, 0.4) 25%,
+                rgba(200, 250, 255, 0.8) 50%,
+                rgba(100, 180, 255, 0.3) 75%,
+                rgba(200, 250, 255, 0.6) 100%) 2;
+            filter: blur(1px);
+        }
+
+        .ice-belt-middle {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-image: linear-gradient(45deg, 
+                rgba(180, 230, 255, 0.8) 0%,
+                rgba(120, 180, 255, 0.5) 50%,
+                rgba(180, 230, 255, 0.8) 100%) 2;
+            animation-delay: -2s;
+        }
+
+        .ice-belt-inner {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            border-image: linear-gradient(45deg, 
+                rgba(220, 240, 255, 0.9) 0%,
+                rgba(160, 200, 255, 0.6) 50%,
+                rgba(220, 240, 255, 0.9) 100%) 2;
+            animation-delay: -4s;
+        }
+
+        /* Ice Crystals */
+        .ice-crystal {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(200, 230, 255, 0.7) 40%,
+                rgba(150, 200, 255, 0.5) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(200, 230, 255, 0.8);
+            animation: crystalFloat 12s ease-in-out infinite;
+        }
+
+        .crystal-1 { top: 5%; left: 35%; animation-delay: 0s; }
+        .crystal-2 { top: 15%; right: 25%; animation-delay: -2s; }
+        .crystal-3 { top: 45%; left: 15%; animation-delay: -4s; }
+        .crystal-4 { bottom: 30%; right: 35%; animation-delay: -6s; }
+        .crystal-5 { bottom: 15%; left: 45%; animation-delay: -8s; }
+
+        /* Frozen Nebula */
+        .frozen-nebula {
+            position: absolute;
+            width: 500px;
+            height: 300px;
+            top: 5%;
+            right: 5%;
+            background: radial-gradient(ellipse, 
+                rgba(150, 220, 255, 0.4) 0%,
+                rgba(100, 180, 255, 0.3) 30%,
+                rgba(80, 160, 255, 0.2) 60%,
+                transparent 80%);
+            border-radius: 60%;
+            animation: frozenNebulaFloat 35s ease-in-out infinite;
+            filter: blur(3px);
+        }
+
+        /* Comet with Ice Trail */
+        .ice-comet {
+            position: absolute;
+            top: 60%;
+            left: -10%;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(200, 230, 255, 0.7) 50%,
+                rgba(150, 200, 255, 0.5) 100%);
+            border-radius: 50%;
+            animation: iceCometPath 25s linear infinite;
+            box-shadow: 0 0 20px rgba(200, 230, 255, 0.8);
+        }
+
+        .ice-comet::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(200, 230, 255, 0.8) 0%,
+                rgba(150, 200, 255, 0.6) 30%,
+                rgba(100, 180, 255, 0.4) 60%,
+                transparent 100%);
+            transform: translateY(-50%);
+            filter: blur(2px);
+            box-shadow: 0 0 10px rgba(200, 230, 255, 0.5);
+        }
+
+        /* Prism Navigation */
+        .prism-nav {
+            position: fixed;
+            top: 3rem;
+            left: 3rem;
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .prism-nav:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .nav-prism {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .nav-prism-crystal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(200, 230, 255, 0.3) 25%,
+                rgba(150, 200, 255, 0.2) 50%,
+                rgba(200, 230, 255, 0.3) 75%,
+                rgba(255, 255, 255, 0.15) 100%);
+            clip-path: polygon(50% 10%, 90% 30%, 90% 70%, 50% 90%, 10% 70%, 10% 30%);
+            border: 2px solid rgba(200, 230, 255, 0.5);
+            animation: navPrismGlow 6s ease-in-out infinite;
+        }
+
+        .nav-label {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prism-nav:hover .nav-label {
+            opacity: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 6rem 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .blog-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            color: #ffffff;
+            text-shadow: 
+                0 0 30px rgba(200, 230, 255, 0.8),
+                0 0 60px rgba(150, 200, 255, 0.6);
+            animation: titleGlow 6s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+
+        .blog-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Blog Posts Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-post {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(200, 230, 255, 0.08) 50%,
+                rgba(150, 200, 255, 0.05) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(200, 230, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(200, 230, 255, 0.12) 50%,
+                rgba(150, 200, 255, 0.08) 100%);
+        }
+
+        .post-date {
+            color: rgba(200, 230, 255, 0.8);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .post-title {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .post-excerpt {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(200, 230, 255, 0.1);
+            border: 1px solid rgba(200, 230, 255, 0.3);
+            border-radius: 12px;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            color: rgba(200, 230, 255, 0.9);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .read-more {
+            color: rgba(200, 230, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #ffffff;
+            border-bottom-color: rgba(200, 230, 255, 0.6);
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(200, 230, 255, 0.12) 50%,
+                rgba(150, 200, 255, 0.08) 100%);
+            border: 2px solid rgba(200, 230, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                rgba(200, 230, 255, 0.8) 0%,
+                rgba(150, 200, 255, 0.6) 50%,
+                rgba(200, 230, 255, 0.8) 100%);
+            animation: featuredGlow 3s ease-in-out infinite;
+        }
+
+        .featured-label {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: rgba(200, 230, 255, 0.2);
+            border: 1px solid rgba(200, 230, 255, 0.4);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            font-size: 0.7rem;
+            color: rgba(200, 230, 255, 0.9);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(200, 230, 255, 0.05) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .sidebar-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(200, 230, 255, 0.1);
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-date {
+            color: rgba(200, 230, 255, 0.7);
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-decoration: none;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-link:hover {
+            color: rgba(200, 230, 255, 0.9);
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(200, 230, 255, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease;
+        }
+
+        /* Animations */
+        @keyframes crystalTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes iceBeltRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes iceBeltShimmer {
+            0%, 100% { filter: brightness(1) blur(1px); }
+            50% { filter: brightness(1.3) blur(0.5px); }
+        }
+
+        @keyframes crystalFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(90deg); }
+            50% { transform: translateY(-5px) rotate(180deg); }
+            75% { transform: translateY(-20px) rotate(270deg); }
+        }
+
+        @keyframes frozenNebulaFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.4;
+            }
+            33% { 
+                transform: translateY(-25px) rotate(3deg) scale(1.05);
+                opacity: 0.6;
+            }
+            66% { 
+                transform: translateY(15px) rotate(-2deg) scale(0.95);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes iceCometPath {
+            0% { 
+                transform: translate(-150px, -50px) rotate(30deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translate(1200px, 400px) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes navPrismGlow {
+            0%, 100% { 
+                box-shadow: 
+                    inset 0 0 15px rgba(200, 230, 255, 0.2),
+                    0 0 25px rgba(200, 230, 255, 0.4);
+                transform: rotate(0deg);
+            }
+            50% { 
+                box-shadow: 
+                    inset 0 0 25px rgba(200, 230, 255, 0.4),
+                    0 0 45px rgba(200, 230, 255, 0.6);
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 30px rgba(200, 230, 255, 0.8),
+                    0 0 60px rgba(150, 200, 255, 0.6);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 40px rgba(200, 230, 255, 1),
+                    0 0 80px rgba(150, 200, 255, 0.8);
+            }
+        }
+
+        @keyframes featuredGlow {
+            0%, 100% { 
+                background: linear-gradient(90deg, 
+                    rgba(200, 230, 255, 0.8) 0%,
+                    rgba(150, 200, 255, 0.6) 50%,
+                    rgba(200, 230, 255, 0.8) 100%);
+            }
+            50% { 
+                background: linear-gradient(90deg, 
+                    rgba(200, 230, 255, 1) 0%,
+                    rgba(150, 200, 255, 0.8) 50%,
+                    rgba(200, 230, 255, 1) 100%);
+            }
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+        }
+        
+        @keyframes sparkleEffect {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+                box-shadow: 0 0 0px rgba(200, 230, 255, 0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
+                box-shadow: 0 0 15px rgba(200, 230, 255, 0.8);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+                box-shadow: 0 0 0px rgba(200, 230, 255, 0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .prism-nav {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+            
+            .nav-prism {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .blog-title {
+                font-size: 2.5rem;
+                letter-spacing: 0.1em;
+            }
+            
+            .main-content {
+                padding: 4rem 1rem 2rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .ice-belt-system {
+                width: 300px;
+                height: 300px;
+                top: 15%;
+                left: 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-title {
+                font-size: 2rem;
+            }
+            
+            .blog-post {
+                padding: 1.5rem;
+            }
+            
+            .ice-comet {
+                display: none;
+            }
+            
+            .frozen-nebula {
+                width: 250px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-container">
+        <div class="stars"></div>
+        <div class="frozen-nebula"></div>
+        
+        <!-- Ice Belt System -->
+        <div class="ice-belt-system">
+            <div class="ice-belt ice-belt-outer"></div>
+            <div class="ice-belt ice-belt-middle"></div>
+            <div class="ice-belt ice-belt-inner"></div>
+        </div>
+        
+        <!-- Floating Ice Crystals -->
+        <div class="ice-crystal crystal-1"></div>
+        <div class="ice-crystal crystal-2"></div>
+        <div class="ice-crystal crystal-3"></div>
+        <div class="ice-crystal crystal-4"></div>
+        <div class="ice-crystal crystal-5"></div>
+        
+        <!-- Ice Comet -->
+        <div class="ice-comet"></div>
+    </div>
+
+    <a href="index.html" class="prism-nav">
+        <div class="nav-prism">
+            <div class="nav-prism-crystal"></div>
+        </div>
+        <div class="nav-label">HOME</div>
+    </a>
+
+    <div class="custom-cursor"></div>
+
+    <div class="main-content">
+        <div class="blog-header">
+            <h1 class="blog-title">PRISM JOURNAL</h1>
+            <p class="blog-subtitle">Look here for the latest PRISM updates!</p>
+        </div>
+
+        <div class="blog-grid">
+            <!-- Featured Post -->
+            <article class="blog-post featured-post">
+                <div class="featured-label">Featured</div>
+                <div class="post-date">August 29, 2025</div>
+                <h2 class="post-title">PRISM Capstone Team</h2>
+                <p class="post-excerpt">Welcome to PRISM! Look here for future featured updates and posts!.</p>
+                <div class="post-tags">
+                    <span class="tag">Space</span>
+                    <span class="tag">Education</span>
+                    <span class="tag">Capstone</span>
+                    <span class="tag">New Team</span>
+                </div>
+                <a href="blogposts/blog_format.html" class="read-more">Read Full Article →</a>
+            </article>
+
+            <!-- Regular Posts -->
+            <article class="blog-post">
+                <div class="post-date">August 29, 2025</div>
+                <h2 class="post-title">Regular Post Placeholder</h2>
+                <p class="post-excerpt">Look here for our regular posted updates!</p>
+                <div class="post-tags">
+                    <span class="tag">Update</span>
+                    <span class="tag">Milestone</span>
+                    <span class="tag">Research</span>
+                </div>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+
+        </div>
+
+        <div class="sidebar">
+            <h3 class="sidebar-title">Related Information</h3>
+            
+            <div class="sidebar-item">
+                <div class="sidebar-date">August 29, 2025</div>
+                <a href="#" class="sidebar-link">This is a placeholder :)</a>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="blog.js"></script>
+</body>
+</html>

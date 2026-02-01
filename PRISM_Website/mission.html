@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRISM - Our Mission</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+            background: #000011;
+            color: white;
+            overflow-x: hidden;
+            cursor: none;
+            min-height: 100vh;
+        }
+
+        .space-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: gentleTwinkle 4s ease-in-out infinite;
+        }
+
+        .purple-nebula {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 400px;
+            height: 300px;
+            background: radial-gradient(ellipse, 
+                rgba(138, 43, 226, 0.4) 0%, 
+                rgba(75, 0, 130, 0.3) 30%,
+                rgba(138, 43, 226, 0.2) 60%,
+                transparent 80%);
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: nebulaFloat 40s ease-in-out infinite;
+        }
+
+        .green-nebula {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            width: 350px;
+            height: 250px;
+            background: radial-gradient(ellipse, 
+                rgba(50, 205, 50, 0.3) 0%, 
+                rgba(34, 139, 34, 0.25) 40%,
+                rgba(50, 205, 50, 0.15) 70%,
+                transparent 90%);
+            border-radius: 50%;
+            filter: blur(1.5px);
+            animation: nebulaFloat 35s ease-in-out infinite reverse;
+        }
+
+        .prism-nav {
+            position: fixed;
+            top: 3rem;
+            left: 3rem;
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .prism-nav:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .nav-prism {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .nav-prism-crystal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(100, 200, 255, 0.2) 25%,
+                rgba(200, 100, 255, 0.2) 50%,
+                rgba(255, 200, 100, 0.2) 75%,
+                rgba(255, 255, 255, 0.15) 100%);
+            clip-path: polygon(50% 10%, 90% 30%, 90% 70%, 50% 90%, 10% 70%, 10% 30%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            animation: navPrismGlow 6s ease-in-out infinite;
+        }
+
+        .nav-label {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prism-nav:hover .nav-label {
+            opacity: 1;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .mission-container {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(138, 43, 226, 0.08) 30%,
+                rgba(50, 205, 50, 0.06) 70%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 1400px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .mission-title {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 
+                0 0 20px rgba(138, 43, 226, 0.6),
+                0 0 40px rgba(50, 205, 50, 0.4);
+            animation: titleGlow 6s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        .mission-statement {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(138, 43, 226, 0.06) 50%,
+                rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .mission-statement h2 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .mission-statement p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* GIF Placeholder Styles */
+        .gif-placeholder {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(50, 205, 50, 0.06) 50%,
+                rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .placeholder-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .placeholder-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .placeholder-gif-box {
+            width: 400px;
+            height: 300px;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0.1) 0%,
+                rgba(50, 205, 50, 0.1) 50%,
+                rgba(255, 215, 0, 0.1) 100%);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .placeholder-gif-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                transparent 70%);
+            transform: rotate(45deg);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .placeholder-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            z-index: 2;
+            position: relative;
+        }
+
+        .placeholder-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.5;
+            font-style: italic;
+            max-width: 500px;
+        }
+
+        /* Mission objectives styles */
+        .mission-objectives {
+            margin-bottom: 3rem;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .objective-section {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(138, 43, 226, 0.06) 50%,
+                rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .objective-section h3 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .objective-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .objective-item {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid rgba(138, 43, 226, 0.5);
+            border-radius: 5px;
+        }
+
+        .vision-section {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(50, 205, 50, 0.06) 50%,
+                rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .vision-section h3 {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .vision-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .team-section {
+            width: 100%;
+        }
+
+        .team-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 
+                0 0 15px rgba(138, 43, 226, 0.5),
+                0 0 30px rgba(50, 205, 50, 0.3);
+            margin-bottom: 3rem;
+        }
+
+        .team-lead-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .team-members-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .team-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(138, 43, 226, 0.08) 50%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            width: 300px;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(138, 43, 226, 0.12) 50%,
+                rgba(255, 255, 255, 0.08) 100%);
+            box-shadow: 
+                0 15px 40px rgba(138, 43, 226, 0.2),
+                0 0 50px rgba(50, 205, 50, 0.1);
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .team-member:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0.3) 0%,
+                rgba(50, 205, 50, 0.3) 50%,
+                rgba(255, 215, 0, 0.3) 100%);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .team-member:hover .member-photo {
+            transform: scale(1.05);
+            border-color: rgba(138, 43, 226, 0.5);
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .member-name {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-position {
+            color: rgba(138, 43, 226, 0.9);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .member-degree {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.3;
+            font-style: italic;
+        }
+
+        .team-lead .team-member {
+            border-color: rgba(255, 215, 0, 0.4);
+            width: 320px;
+        }
+
+        .team-lead .team-member:hover {
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 
+                0 15px 40px rgba(255, 215, 0, 0.3),
+                0 0 50px rgba(138, 43, 226, 0.2);
+        }
+
+        .team-lead .member-position {
+            color: rgba(255, 215, 0, 0.9);
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffffff 30%, rgba(138, 43, 226, 0.8) 60%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform 0.2s ease;
+            box-shadow: 
+                0 0 10px rgba(138, 43, 226, 0.6),
+                0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        /* Space elements */
+        .ice-planet {
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 35% 35%, 
+                #e3f2fd 0%, 
+                #bbdefb 20%,
+                #90caf9 40%,
+                #64b5f6 60%,
+                #42a5f5 80%,
+                #2196f3 100%);
+            border-radius: 50%;
+            animation: planetSpin 30s linear infinite;
+            box-shadow: 
+                inset -15px -15px 30px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(33, 150, 243, 0.5);
+        }
+
+        .desert-planet {
+            position: absolute;
+            bottom: 25%;
+            right: 8%;
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle at 40% 30%, 
+                #fff3e0 0%, 
+                #ffe0b2 25%,
+                #ffcc02 50%,
+                #ff9800 75%,
+                #f57c00 100%);
+            border-radius: 50%;
+            animation: planetSpin 40s linear infinite reverse;
+            box-shadow: 
+                inset -12px -12px 25px rgba(0, 0, 0, 0.5),
+                0 0 35px rgba(255, 152, 0, 0.4);
+        }
+
+        .wormhole {
+            position: absolute;
+            top: 25%;
+            right: 40%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle,
+                rgba(75, 0, 130, 0.8) 0%,
+                rgba(138, 43, 226, 0.6) 30%,
+                rgba(0, 0, 0, 0.9) 70%,
+                transparent 100%);
+            border-radius: 50%;
+            animation: wormholeSpin 8s linear infinite;
+            box-shadow: 
+                0 0 30px rgba(138, 43, 226, 0.8),
+                inset 0 0 20px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Animations */
+        @keyframes gentleTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes nebulaFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-30px) rotate(3deg) scale(1.08); }
+            66% { transform: translateY(15px) rotate(-2deg) scale(0.95); }
+        }
+
+        @keyframes navPrismGlow {
+            0%, 100% { 
+                box-shadow: 
+                    inset 0 0 15px rgba(255, 255, 255, 0.1),
+                    0 0 20px rgba(138, 43, 226, 0.3);
+                transform: rotate(0deg);
+            }
+            50% { 
+                box-shadow: 
+                    inset 0 0 25px rgba(255, 255, 255, 0.2),
+                    0 0 40px rgba(50, 205, 50, 0.5);
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 20px rgba(138, 43, 226, 0.6),
+                    0 0 40px rgba(50, 205, 50, 0.4);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 30px rgba(138, 43, 226, 0.8),
+                    0 0 60px rgba(50, 205, 50, 0.6);
+            }
+        }
+
+        @keyframes planetSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes wormholeSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translateX(-200%); }
+            50% { transform: rotate(45deg) translateX(0%); }
+            100% { transform: rotate(45deg) translateX(200%); }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .objectives-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .team-row {
+                justify-content: center;
+                gap: 1.5rem;
+            }
+            
+            .team-member {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .prism-nav {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+            
+            .nav-prism {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .mission-title {
+                font-size: 2rem;
+                letter-spacing: 0.1em;
+            }
+            
+            .mission-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .placeholder-gif-box {
+                width: 300px;
+                height: 225px;
+            }
+
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .objective-section {
+                padding: 1.5rem;
+            }
+            
+            .team-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .team-member {
+                width: 100%;
+                max-width: 350px;
+            }
+
+            .team-lead .team-member {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mission-title {
+                font-size: 1.5rem;
+            }
+            
+            .mission-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1rem 1rem;
+            }
+
+            .placeholder-gif-box {
+                width: 250px;
+                height: 180px;
+            }
+
+            .objective-section {
+                padding: 1rem;
+            }
+
+            .team-member {
+                padding: 1.5rem;
+            }
+
+            .member-photo {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-container">
+        <div class="stars"></div>
+        <div class="purple-nebula"></div>
+        <div class="green-nebula"></div>
+    </div>
+
+    <a href="index.html" class="prism-nav">
+        <div class="nav-prism">
+            <div class="nav-prism-crystal"></div>
+        </div>
+        <div class="nav-label">HOME</div>
+    </a>
+
+    <div class="ice-planet"></div>
+    <div class="desert-planet"></div>
+    <div class="wormhole"></div>
+
+    <div class="custom-cursor"></div>
+
+    <div class="main-content">
+        <div class="mission-container">
+            <h1 class="mission-title">OUR MISSION</h1>
+            
+            <div class="mission-statement">
+                <h2>Pioneering the Future of Rendezvous and Proximity Operation Developement</h2>
+                <p>At PRISM, our mission is to design, build, and validate a budget friendly, scalable 3DOF satellite platform that can demonstrate key technologies for safe and precise Rendezvous and Proximity Operations (RPO). As space becomes increasingly crowded, the ability to approach, dock, service, or refuel spacecraft is more critical than ever. PRISM aims to advance these capabilities at the undergraduate level, bridging classroom theory with real-world engineering challenges.</p>
+            </div>
+
+            <div class="gif-placeholder">
+                <h3 class="placeholder-title">RPO Visualization</h3>
+                <div class="placeholder-container">
+                    <div class="placeholder-gif-box">
+                        <div class="placeholder-text">GIF Placeholder</div>
+                    </div>
+                    <div class="placeholder-description">
+                        Future location for RPO demonstration animation showing autonomous approach, inspection orbit, and rendezvous sequence
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-objectives">
+                <div class="objectives-grid">
+                    <div class="objective-section">
+                        <h3>Why RPO Matters</h3>
+                        <div class="objective-list">
+                            <div class="objective-item">
+                                <strong>Enabling Sustainability in Space:</strong> RPO technologies support satellite servicing, debris mitigation, and life extension of space assets.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Advancing Human Exploration:</strong> From docking with the ISS to assembling spacecraft for lunar and Martian missions, RPO is a cornerstone of future exploration.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Strengthening National Security & Industry Leadership:</strong> Precision maneuvering and satellite autonomy are key to maintaining leadership and accountability in aerospace and defense.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="objective-section">
+                        <h3>Our Objectives</h3>
+                        <div class="objective-list">
+                            <div class="objective-item">
+                                <strong>Design & Build</strong> a 3DOF spacecraft platform capable of simulating in-orbit-plane RPO maneuvers on an air-bearing test bed.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Integrate CO₂ Thrusters & Reaction Wheel Control Authority</strong> to achieve controlled mobility and attitude adjustment.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Develop and Validate Algorithms</strong> for guidance, navigation, and control (GNC) in basic proximity scenarios.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Demonstrate Proof-of-Concept</strong> that can serve as a foundation for future orbital testing and research.
+                            </div>
+                            <div class="objective-item">
+                                <strong>Educate & Inspire</strong> the next generation of aerospace engineers by providing a hands-on, research-driven experience.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vision-section">
+                    <h3>Our Vision</h3>
+                    <p>PRISM seeks to become a model for undergraduate-led space engineering innovation. By combining interdisciplinary collaboration, cutting-edge simulation, and hands-on hardware development, we aim to demonstrate that the future of autonomous spacecraft operations can begin in the lab today.</p>
+                </div>
+            </div>
+            
+            <div class="team-section">
+                <h2 class="team-title">MEET THE TEAM</h2>
+                
+                <div class="team-lead-container team-lead">
+                    <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/ryan-coder.jpg" alt="Ryan Coder" />
+                        </div>
+                        <div class="member-name">Ryan Coder</div>
+                        <div class="member-position">Team Lead</div>
+                        <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Security & Intelligence</div>
+                    </div>
+                </div>
+                
+                <div class="team-members-container">
+                    <div class="team-row">
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/tanner-whitney.jpg" alt="Tanner" />
+                        </div>
+                            <div class="member-name">Tanner Whitney</div>
+                            <div class="member-position">Integration & Test</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Specialization: Astronautics</div>
+                        </div>
+                        
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/chanel-davis.jpg" alt="Chanel Davis" />
+                        </div>
+                            <div class="member-name">Chanel Davis</div>
+                            <div class="member-position">Attitude & Control</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Alternative Energy</div>
+                        </div>
+                        
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/isaiah-gale.jpg" alt="Isaiah" />
+                        </div>
+                            <div class="member-name">Isaiah Gale</div>
+                            <div class="member-position">Flight Software</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Propulsion</div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-row">
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/charles-allen.jpg" alt="Charles" />
+                        </div>
+                            <div class="member-name">Charles Allen</div>
+                            <div class="member-position">Structure</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Mathematics</div>
+                        </div>
+                        
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/owen-glascoe.jpg" alt="Owen" />
+                        </div>
+                            <div class="member-name">Owen Glascoe</div>
+                            <div class="member-position">Propulsion</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Propulsion</div>
+                        </div>
+                        <div class="team-member">
+                        <div class="member-photo">
+                            <img src="images/team/zachary-mckissor.jpg" alt="Zach" />
+                        </div>
+                            <div class="member-name">Zachary McKissor</div>
+                            <div class="member-position">Power</div>
+                            <div class="member-degree">B.S. Aerospace Engineering<br>Minor: Astrophysics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mission.js"></script>
+</body>
+</html>
