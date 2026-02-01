@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Title - PRISM Journal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow-x: hidden;
+            font-family: 'Courier New', monospace;
+            cursor: none;
+            min-height: 100vh;
+        }
+
+        .space-container {
+            position: fixed;
+            width: 100vw;
+            height: 200vh;
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(0, 150, 255, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 60%, rgba(150, 50, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(255, 100, 150, 0.15) 0%, transparent 45%),
+                linear-gradient(135deg, #0a0f1c 0%, #1a2040 30%, #2a1f3a 60%, #1a1f3a 100%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: crystalTwinkle 5s infinite ease-in-out;
+        }
+
+        /* Ice Belt System - Smaller for article page */
+        .ice-belt-system {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            animation: iceBeltRotate 45s linear infinite;
+            opacity: 0.6;
+        }
+
+        .ice-belt {
+            position: absolute;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            animation: iceBeltShimmer 8s ease-in-out infinite;
+        }
+
+        .ice-belt-outer {
+            width: 100%;
+            height: 100%;
+            border-image: linear-gradient(45deg, 
+                rgba(200, 250, 255, 0.6) 0%,
+                rgba(150, 200, 255, 0.4) 25%,
+                rgba(200, 250, 255, 0.8) 50%,
+                rgba(100, 180, 255, 0.3) 75%,
+                rgba(200, 250, 255, 0.6) 100%) 2;
+            filter: blur(1px);
+        }
+
+        .ice-belt-middle {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-image: linear-gradient(45deg, 
+                rgba(180, 230, 255, 0.8) 0%,
+                rgba(120, 180, 255, 0.5) 50%,
+                rgba(180, 230, 255, 0.8) 100%) 2;
+            animation-delay: -2s;
+        }
+
+        .ice-belt-inner {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            border-image: linear-gradient(45deg, 
+                rgba(220, 240, 255, 0.9) 0%,
+                rgba(160, 200, 255, 0.6) 50%,
+                rgba(220, 240, 255, 0.9) 100%) 2;
+            animation-delay: -4s;
+        }
+
+        /* Floating Ice Crystals */
+        .ice-crystal {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(200, 230, 255, 0.7) 40%,
+                rgba(150, 200, 255, 0.5) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(200, 230, 255, 0.6);
+            animation: crystalFloat 15s ease-in-out infinite;
+        }
+
+        .crystal-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .crystal-2 { top: 25%; right: 15%; animation-delay: -3s; }
+        .crystal-3 { top: 65%; left: 10%; animation-delay: -6s; }
+        .crystal-4 { bottom: 20%; right: 25%; animation-delay: -9s; }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prism-nav {
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .prism-nav:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .nav-prism {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .nav-prism-crystal {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(200, 230, 255, 0.3) 25%,
+                rgba(150, 200, 255, 0.2) 50%,
+                rgba(200, 230, 255, 0.3) 75%,
+                rgba(255, 255, 255, 0.15) 100%);
+            clip-path: polygon(50% 10%, 90% 30%, 90% 70%, 50% 90%, 10% 70%, 10% 30%);
+            border: 2px solid rgba(200, 230, 255, 0.5);
+            animation: navPrismGlow 6s ease-in-out infinite;
+        }
+
+        .nav-label {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .prism-nav:hover .nav-label {
+            opacity: 1;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(200, 230, 255, 0.12) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.3);
+            border-radius: 25px;
+            padding: 0.7rem 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(200, 230, 255, 0.18) 100%);
+            border-color: rgba(200, 230, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            padding: 8rem 2rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(200, 230, 255, 0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(200, 230, 255, 0.8);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .meta-icon {
+            width: 16px;
+            height: 16px;
+            background: rgba(200, 230, 255, 0.6);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .article-title {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            text-shadow: 
+                0 0 30px rgba(200, 230, 255, 0.8),
+                0 0 60px rgba(150, 200, 255, 0.6);
+            animation: titleGlow 6s ease-in-out infinite;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .article-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            letter-spacing: 0.05em;
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .article-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            background: rgba(200, 230, 255, 0.1);
+            border: 1px solid rgba(200, 230, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.75rem;
+            color: rgba(200, 230, 255, 0.9);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.03) 0%,
+                rgba(200, 230, 255, 0.06) 50%,
+                rgba(150, 200, 255, 0.03) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.15);
+            border-radius: 25px;
+            padding: 3rem;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .article-content h2 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin: 2.5rem 0 1.5rem 0;
+            text-shadow: 0 0 20px rgba(200, 230, 255, 0.5);
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            color: rgba(200, 230, 255, 0.9);
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .article-content p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .article-content ul, .article-content ol {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        .article-content blockquote {
+            background: rgba(200, 230, 255, 0.05);
+            border-left: 4px solid rgba(200, 230, 255, 0.5);
+            border-radius: 0 15px 15px 0;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: rgba(200, 230, 255, 0.9);
+            position: relative;
+        }
+
+        .article-content blockquote::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 3rem;
+            color: rgba(200, 230, 255, 0.3);
+            font-family: serif;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, 
+                rgba(200, 230, 255, 0.08) 0%,
+                rgba(150, 200, 255, 0.12) 50%,
+                rgba(200, 230, 255, 0.08) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-box h4 {
+            color: rgba(200, 230, 255, 0.9);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Image Placeholder Styles */
+        .article-image {
+            background: linear-gradient(135deg, 
+                rgba(200, 230, 255, 0.1) 0%,
+                rgba(150, 200, 255, 0.05) 100%);
+            border: 2px dashed rgba(200, 230, 255, 0.3);
+            border-radius: 20px;
+            height: 300px;
+            margin: 2.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(200, 230, 255, 0.6);
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Related Articles */
+        .related-section {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 20px rgba(200, 230, 255, 0.5);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(200, 230, 255, 0.08) 50%,
+                rgba(150, 200, 255, 0.05) 100%);
+            border: 1px solid rgba(200, 230, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(200, 230, 255, 0.4);
+        }
+
+        .related-card h4 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .related-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .related-meta {
+            color: rgba(200, 230, 255, 0.8);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(200, 230, 255, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease;
+        }
+
+        /* Progress Bar */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                rgba(200, 230, 255, 0.8) 0%,
+                rgba(150, 200, 255, 0.9) 50%,
+                rgba(200, 230, 255, 0.8) 100%);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Animations */
+        @keyframes crystalTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes iceBeltRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes iceBeltShimmer {
+            0%, 100% { filter: brightness(1) blur(1px); }
+            50% { filter: brightness(1.3) blur(0.5px); }
+        }
+
+        @keyframes crystalFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+            75% { transform: translateY(-25px) rotate(270deg); }
+        }
+
+        @keyframes navPrismGlow {
+            0%, 100% { 
+                box-shadow: 
+                    inset 0 0 15px rgba(200, 230, 255, 0.2),
+                    0 0 25px rgba(200, 230, 255, 0.4);
+                transform: rotate(0deg);
+            }
+            50% { 
+                box-shadow: 
+                    inset 0 0 25px rgba(200, 230, 255, 0.4),
+                    0 0 45px rgba(200, 230, 255, 0.6);
+                transform: rotate(180deg);
+            }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 30px rgba(200, 230, 255, 0.8),
+                    0 0 60px rgba(150, 200, 255, 0.6);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 40px rgba(200, 230, 255, 1),
+                    0 0 80px rgba(150, 200, 255, 0.8);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-container {
+                top: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .nav-actions {
+                gap: 0.5rem;
+            }
+
+            .nav-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+            }
+            
+            .article-title {
+                font-size: 2.2rem;
+                letter-spacing: 0.05em;
+            }
+            
+            .main-content {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .article-content {
+                padding: 2rem;
+            }
+            
+            .ice-belt-system {
+                width: 250px;
+                height: 250px;
+                top: 5%;
+                right: -50px;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-title {
+                font-size: 1.8rem;
+            }
+            
+            .article-content {
+                padding: 1.5rem;
+            }
+            
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reading-progress"></div>
+    
+    <div class="space-container">
+        <div class="stars"></div>
+        
+        <!-- Ice Belt System -->
+        <div class="ice-belt-system">
+            <div class="ice-belt ice-belt-outer"></div>
+            <div class="ice-belt ice-belt-middle"></div>
+            <div class="ice-belt ice-belt-inner"></div>
+        </div>
+        
+        <!-- Floating Ice Crystals -->
+        <div class="ice-crystal crystal-1"></div>
+        <div class="ice-crystal crystal-2"></div>
+        <div class="ice-crystal crystal-3"></div>
+        <div class="ice-crystal crystal-4"></div>
+    </div>
+
+    <nav class="nav-container">
+        <a href="../blog.html" class="prism-nav">
+            <div class="nav-prism">
+                <div class="nav-prism-crystal"></div>
+            </div>
+            <div class="nav-label">BACK</div>
+        </a>
+        
+        <div class="nav-actions">
+            <button class="nav-button" onclick="window.print()">Print</button>
+            <button class="nav-button" onclick="shareArticle()">Share</button>
+        </div>
+    </nav>
+
+    <div class="custom-cursor"></div>
+
+    <main class="main-content">
+        <header class="article-header">
+            <div class="article-meta">
+                <div class="meta-item">
+                    <span class="meta-icon"></span>
+                    <span>August 29, 2025</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-icon"></span>
+                    <span>8 min read</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-icon"></span>
+                    <span>By PRISM Team</span>
+                </div>
+            </div>
+            
+            <h1 class="article-title">PRISM Capstone Team: A New Era of Space Exploration</h1>
+            <p class="article-subtitle">Discover how our innovative capstone project is pushing the boundaries of space technology and opening new frontiers for human exploration.</p>
+            
+            <div class="article-tags">
+                <span class="tag">Space Technology</span>
+                <span class="tag">Innovation</span>
+                <span class="tag">Capstone Project</span>
+                <span class="tag">Research</span>
+            </div>
+        </header>
+
+        <article class="article-content">
+            <h2>Introduction to PRISM</h2>
+            <p>This article is a placeholder generated with AI!</p>
+
+            <div class="article-image">
+                [Article Hero Image - Space Technology Concept]
+            </div>
+
+            <p>The journey began with a simple question: How can we make space more accessible while maintaining the highest standards of safety and efficiency? This question led us down a path of discovery that has yielded remarkable results and opened new possibilities for future exploration.</p>
+
+            <h2>The Technology Behind PRISM</h2>
+            <p>At the core of PRISM lies a sophisticated array of technologies working in harmony. Our approach integrates advanced propulsion systems, intelligent navigation algorithms, and revolutionary materials science to create a platform that exceeds current industry standards.</p>
+
+            <div class="highlight-box">
+                <h4>Key Innovation Highlights</h4>
+                <p>Our team has achieved several breakthrough milestones that set PRISM apart from conventional space technology solutions. These innovations represent months of rigorous testing and refinement.</p>
+            </div>
+
+            <h3>Advanced Propulsion Systems</h3>
+            <p>The propulsion technology developed for PRISM utilizes a hybrid approach that combines traditional chemical propulsion with innovative ion drive systems. This dual-mode operation allows for both high-thrust maneuvers and efficient long-duration missions.</p>
+
+            <p>Key features of our propulsion system include:</p>
+            <ul>
+                <li>Enhanced fuel efficiency through optimized combustion algorithms</li>
+                <li>Modular design allowing for mission-specific configurations</li>
+                <li>Advanced thermal management systems</li>
+                <li>Integrated safety protocols and redundancy measures</li>
+            </ul>
+
+            <blockquote>
+                "Innovation is not just about creating something new; it's about solving problems that matter and making a difference in how we explore our universe."
+            </blockquote>
+
+            <h3>Intelligent Navigation and Control</h3>
+            <p>Our navigation system represents a significant leap forward in autonomous space vehicle control. By incorporating machine learning algorithms and real-time environmental analysis, PRISM can adapt to changing conditions and optimize its trajectory dynamically.</p>
+
+            <div class="article-image">
+                [Technical Diagram - Navigation System Architecture]
+            </div>
+
+            <p>The system processes data from multiple sensors simultaneously, creating a comprehensive understanding of the vehicle's environment. This approach enables unprecedented precision in navigation and mission execution.</p>
+
+            <h2>Research Methodology and Testing</h2>
+            <p>The development of PRISM followed a rigorous research methodology that emphasized both theoretical analysis and practical validation. Our testing procedures were designed to simulate the extreme conditions of space while maintaining safety standards for ground-based operations.</p>
+
+            <h3>Simulation and Modeling</h3>
+            <p>Extensive computer simulations formed the foundation of our research approach. These models allowed us to test thousands of scenarios and optimize system performance before physical prototyping began.</p>
+
+            <p>Our simulation framework includes:</p>
+            <ol>
+                <li>Multi-physics modeling of propulsion systems</li>
+                <li>Environmental simulation including radiation and temperature extremes</li>
+                <li>Mission scenario testing with various payload configurations</li>
+                <li>Failure mode analysis and system redundancy validation</li>
+            </ol>
+
+            <h2>Future Implications and Applications</h2>
+            <p>The technologies developed through the PRISM project have applications that extend far beyond our initial scope. From satellite deployment to deep space exploration, the innovations we've created open new possibilities for space-based operations.</p>
+
+            <div class="highlight-box">
+                <h4>Looking Ahead</h4>
+                <p>As we continue to refine and develop PRISM technologies, we're already identifying new challenges and opportunities for future research. The journey of innovation never ends.</p>
+            </div>
+
+            <p>Our team remains committed to pushing the boundaries of what's possible in space technology. Through continued research, collaboration, and innovation, we believe PRISM will play a crucial role in humanity's next steps into the cosmos.</p>
+
+            <h2>Conclusion</h2>
+            <p>The PRISM project represents more than just a capstone achievement—it's a testament to what's possible when innovative minds come together to solve complex challenges. As we look to the future, we're excited about the potential applications and continued development of these groundbreaking technologies.</p>
+
+            <p>Thank you for joining us on this journey of discovery. Stay tuned for more updates as we continue to explore new frontiers and push the boundaries of space technology.</p>
+        </article>
+
+    <script src="blog_article.js"></script>
+</body>
+</html>
