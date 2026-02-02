@@ -4,16 +4,6 @@
       "filename": "ph.txt",
       "name": "ph.txt",
       "description": "Sample .txt file"
-    }
-  ]
-}
-
-{
-  "files": [
-    {
-      "filename": "ph.txt",
-      "name": "ph.txt",
-      "description": "Sample .txt file"
     },
     {
       "filename": "test2.txt",
