@@ -4,6 +4,11 @@
       "filename": "ph.txt",
       "name": "ph.txt",
       "description": "Sample .txt file"
+    },
+    {
+      "filename": "test2.txt",
+      "name": "test2.txt",
+      "description": "Sample .txt file"
     }
   ]
 }
