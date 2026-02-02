@@ -1,19 +1,9 @@
 {
   "files": [
     {
-      "filename": "example-document.pdf",
-      "name": "Example Document",
-      "description": "Sample PDF file"
-    },
-    {
-      "filename": "mission-report.docx",
-      "name": "Mission Report",
-      "description": "Project documentation"
-    },
-    {
-      "filename": "team-photo.jpg",
-      "name": "Team Photo",
-      "description": "Group picture"
+      "filename": "test2.txt",
+      "name": "test2.txt",
+      "description": "Sample .txt file"
     }
   ],
   "folders": [
@@ -21,11 +11,6 @@
       "foldername": "documents",
       "name": "Documents Folder",
       "description": "All project documents"
-    },
-    {
-      "foldername": "images",
-      "name": "Images",
-      "description": "Photo gallery"
     }
   ]
 }
