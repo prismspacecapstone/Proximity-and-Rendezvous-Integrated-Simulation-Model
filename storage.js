@@ -67,14 +67,21 @@ function formatFileSize(bytes) {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 }
 
+// Current path tracking
+let currentPath = '';
+
 // Load files from storage folder
-async function loadFiles() {
+async function loadFiles(path = '') {
     const filesGrid = document.getElementById('filesGrid');
     const fileCount = document.getElementById('fileCount');
+    const folderPath = document.querySelector('.folder-path');
+    
+    currentPath = path;
     
     try {
         // For static sites: load files list from files.json
-        const response = await fetch('storage/files.json');
+        const jsonPath = path ? `storage/${path}/files.json` : 'storage/files.json';
+        const response = await fetch(jsonPath);
         
         if (!response.ok) {
             throw new Error('files.json not found');
@@ -82,26 +89,61 @@ async function loadFiles() {
         
         const data = await response.json();
         const files = data.files || [];
+        const folders = data.folders || [];
         
-        if (files.length === 0) {
+        // Update folder path display
+        if (path) {
+            folderPath.innerHTML = `📁 /storage/${path}`;
+        } else {
+            folderPath.innerHTML = `📁 /storage`;
+        }
+        
+        if (files.length === 0 && folders.length === 0) {
             filesGrid.innerHTML = `
                 <div class="empty-state" style="grid-column: 1 / -1;">
                     <div class="empty-icon">📭</div>
-                    <p>No files found in storage folder</p>
-                    <p style="margin-top: 1rem; font-size: 0.9rem;">
-                        Add files to storage/files.json
-                    </p>
+                    <p>No files or folders found</p>
+                    ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1rem;">← Back to Main</button>` : ''}
                 </div>
             `;
-            fileCount.textContent = '0 files';
+            fileCount.textContent = '0 items';
             return;
         }
         
-        fileCount.textContent = `${files.length} file${files.length !== 1 ? 's' : ''}`;
+        const totalItems = files.length + folders.length;
+        fileCount.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+        
+        // Create back button if in subfolder
+        let backButton = '';
+        if (path) {
+            const parentPath = path.split('/').slice(0, -1).join('/');
+            backButton = `
+                <div class="file-card folder-card" onclick="loadFiles('${parentPath}')">
+                    <div class="file-icon">📁</div>
+                    <div class="file-name">.. (Go Back)</div>
+                    <div class="file-info">Return to parent folder</div>
+                </div>
+            `;
+        }
+        
+        // Create folder cards
+        const folderCards = folders.map(folder => {
+            const folderFullPath = path ? `${path}/${folder.foldername}` : folder.foldername;
+            const displayName = folder.name || folder.foldername;
+            const description = folder.description || 'Click to open folder';
+            
+            return `
+                <div class="file-card folder-card" onclick="loadFiles('${folderFullPath}')">
+                    <div class="file-icon">📁</div>
+                    <div class="file-name">${displayName}</div>
+                    <div class="file-info">${description}</div>
+                </div>
+            `;
+        }).join('');
         
         // Create file cards
-        filesGrid.innerHTML = files.map((file, index) => {
-            const filePath = `storage/${file.filename}`;
+        const fileCards = files.map((file, index) => {
+            const filePath = path ? `storage/${path}/${file.filename}` : `storage/${file.filename}`;
             const displayName = file.name || file.filename;
             const description = file.description || 'Click to view or download';
             
@@ -118,6 +160,8 @@ async function loadFiles() {
             `;
         }).join('');
         
+        filesGrid.innerHTML = backButton + folderCards + fileCards;
+        
     } catch (error) {
         console.error('Error loading files:', error);
         
@@ -128,6 +172,7 @@ async function loadFiles() {
                 <p style="margin-top: 1rem; font-size: 0.9rem;">
                     Make sure storage/files.json exists and is properly formatted
                 </p>
+                ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1rem;">← Back to Main</button>` : ''}
             </div>
         `;
         fileCount.textContent = 'Error loading files';
