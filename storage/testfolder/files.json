@@ -6,5 +6,11 @@
       "description": "Sample .txt file"
     }
   ],
-  "folders": []
+  "folders": [
+    {
+      "foldername": "testfolder",
+      "name": "testfolder",
+      "description": "All project documents"
+    }
+  ]
 }
