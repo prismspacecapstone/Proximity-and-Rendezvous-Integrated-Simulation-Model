@@ -94,19 +94,35 @@ async function loadFiles(path = '') {
         // For static sites: load files list from files.json
         const jsonPath = path ? `storage/${path}/files.json` : 'storage/files.json';
         
-        console.log('Loading from:', jsonPath); // Debug log
+        console.log('📁 Loading from:', jsonPath);
+        console.log('📍 Current path:', path || 'root');
         
         const response = await fetch(jsonPath);
         
         if (!response.ok) {
-            throw new Error(`files.json not found at ${jsonPath}`);
+            throw new Error(`files.json not found at: ${jsonPath}\n\nPossible issues:\n• The folder might not exist\n• The folder name might not match exactly (case-sensitive)\n• files.json is missing inside this folder`);
         }
         
         const data = await response.json();
         const files = data.files || [];
         const folders = data.folders || [];
         
-        console.log('Loaded data:', { files, folders }); // Debug log
+        console.log('✓ Loaded successfully:', { 
+            path: jsonPath,
+            fileCount: files.length, 
+            folderCount: folders.length,
+            files: files.map(f => f.filename),
+            folders: folders.map(f => f.foldername)
+        });
+        
+        // Validate folder structure
+        if (folders.length > 0) {
+            console.log('📂 Subfolders found:');
+            folders.forEach(folder => {
+                const subFolderPath = path ? `${path}/${folder.foldername}` : folder.foldername;
+                console.log(`  • ${folder.foldername} (will load from: storage/${subFolderPath}/files.json)`);
+            });
+        }
         
         // Update folder path display
         if (path) {
@@ -119,7 +135,10 @@ async function loadFiles(path = '') {
             filesGrid.innerHTML = `
                 <div class="empty-state" style="grid-column: 1 / -1;">
                     <div class="empty-icon">🔭</div>
-                    <p>No files or folders found</p>
+                    <p>This folder is empty</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+                        No files or folders found in ${path || 'storage'}
+                    </p>
                     ${path ? `<button class="action-btn" onclick="goBack()" style="margin-top: 1rem;">← Back to Parent</button>` : ''}
                 </div>
             `;
@@ -138,7 +157,7 @@ async function loadFiles(path = '') {
                 <div class="file-card folder-card" onclick="loadFiles('${parentPath}')" style="background: rgba(50, 40, 30, 0.8); border-color: rgba(255, 200, 100, 0.4);">
                     <div class="file-icon">⬆️</div>
                     <div class="file-name">.. (Go Back)</div>
-                    <div class="file-info">Return to parent folder</div>
+                    <div class="file-info">Return to ${parentPath || 'main folder'}</div>
                 </div>
             `;
         }
@@ -154,6 +173,9 @@ async function loadFiles(path = '') {
                     <div class="file-icon">📁</div>
                     <div class="file-name">${displayName}</div>
                     <div class="file-info">${description}</div>
+                    <div class="file-actions" style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">
+                        Folder: ${folder.foldername}
+                    </div>
                     <div class="file-actions">
                         <button class="action-btn" onclick="event.stopPropagation(); loadFiles('${folderFullPath}')">OPEN</button>
                         <button class="action-btn download" onclick="event.stopPropagation(); downloadFolder('${folderFullPath}', '${displayName.replace(/'/g, "\\'")}')">DOWNLOAD ZIP</button>
@@ -173,6 +195,9 @@ async function loadFiles(path = '') {
                     <div class="file-icon">${getFileIcon(file.filename)}</div>
                     <div class="file-name">${displayName}</div>
                     <div class="file-info">${description}</div>
+                    <div class="file-actions" style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem;">
+                        File: ${file.filename}
+                    </div>
                     <div class="file-actions">
                         <button class="action-btn" onclick="viewFile('${filePath}', '${displayName.replace(/'/g, "\\'")}')">VIEW</button>
                         <a href="${filePath}" download="${file.filename}" class="action-btn download">DOWNLOAD</a>
@@ -184,19 +209,50 @@ async function loadFiles(path = '') {
         filesGrid.innerHTML = backButton + folderCards + fileCards;
         
     } catch (error) {
-        console.error('Error loading files:', error);
+        console.error('❌ Error loading files:', error);
+        
+        // Detailed error message
+        let errorDetails = '';
+        if (error.message.includes('not found')) {
+            errorDetails = `
+                <div style="text-align: left; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                    <strong>Debug Info:</strong><br>
+                    • Looking for: <code style="color: #ffd700;">storage/${path}/files.json</code><br>
+                    • Current location: <code style="color: #ffd700;">${path || 'root'}</code><br><br>
+                    <strong>Possible fixes:</strong><br>
+                    1. Create the file: <code style="color: #4CAF50;">storage/${path}/files.json</code><br>
+                    2. Check folder name matches exactly (case-sensitive)<br>
+                    3. Make sure the physical folder exists on your server
+                </div>
+            `;
+        } else if (error.message.includes('JSON')) {
+            errorDetails = `
+                <div style="text-align: left; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                    <strong>JSON Error:</strong><br>
+                    The files.json file has invalid syntax.<br><br>
+                    <strong>Fix it:</strong><br>
+                    1. Copy the contents of <code style="color: #ffd700;">storage/${path}/files.json</code><br>
+                    2. Validate it at: <code style="color: #4CAF50;">https://jsonlint.com</code><br>
+                    3. Fix the errors and re-upload
+                </div>
+            `;
+        }
         
         filesGrid.innerHTML = `
             <div class="empty-state" style="grid-column: 1 / -1;">
                 <div class="empty-icon">⚠️</div>
-                <p style="color: rgba(255, 150, 150, 0.9);">Could not load file list</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
-                    ${error.message}
+                <p style="color: rgba(255, 150, 150, 0.9); font-size: 1.2rem; margin-bottom: 1rem;">Could not load this folder</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+                    ${error.message.split('\n')[0]}
                 </p>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
-                    Make sure the files.json exists at the correct location
+                ${errorDetails}
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
+                    ${path ? `<button class="action-btn" onclick="loadFiles('')">← Back to Main Storage</button>` : ''}
+                    <button class="action-btn" onclick="window.open('https://jsonlint.com', '_blank')" style="background: rgba(100, 200, 255, 0.2);">Validate JSON</button>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                    💡 Tip: Press F12 and check the Console tab for detailed error messages
                 </p>
-                ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1.5rem;">← Back to Main Storage</button>` : ''}
             </div>
         `;
         fileCount.textContent = 'Error loading files';
