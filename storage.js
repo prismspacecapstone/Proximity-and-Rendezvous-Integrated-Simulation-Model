@@ -78,18 +78,31 @@ async function loadFiles(path = '') {
     
     currentPath = path;
     
+    // Show loading state
+    filesGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: rgba(255, 255, 255, 0.6);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+            <p>Loading files...</p>
+        </div>
+    `;
+    
     try {
         // For static sites: load files list from files.json
         const jsonPath = path ? `storage/${path}/files.json` : 'storage/files.json';
+        
+        console.log('Loading from:', jsonPath); // Debug log
+        
         const response = await fetch(jsonPath);
         
         if (!response.ok) {
-            throw new Error('files.json not found');
+            throw new Error(`files.json not found at ${jsonPath}`);
         }
         
         const data = await response.json();
         const files = data.files || [];
         const folders = data.folders || [];
+        
+        console.log('Loaded data:', { files, folders }); // Debug log
         
         // Update folder path display
         if (path) {
@@ -101,9 +114,9 @@ async function loadFiles(path = '') {
         if (files.length === 0 && folders.length === 0) {
             filesGrid.innerHTML = `
                 <div class="empty-state" style="grid-column: 1 / -1;">
-                    <div class="empty-icon">📭</div>
+                    <div class="empty-icon">🔭</div>
                     <p>No files or folders found</p>
-                    ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1rem;">← Back to Main</button>` : ''}
+                    ${path ? `<button class="action-btn" onclick="goBack()" style="margin-top: 1rem;">← Back to Parent</button>` : ''}
                 </div>
             `;
             fileCount.textContent = '0 items';
@@ -118,8 +131,8 @@ async function loadFiles(path = '') {
         if (path) {
             const parentPath = path.split('/').slice(0, -1).join('/');
             backButton = `
-                <div class="file-card folder-card" onclick="loadFiles('${parentPath}')">
-                    <div class="file-icon">📁</div>
+                <div class="file-card folder-card" onclick="loadFiles('${parentPath}')" style="background: rgba(50, 40, 30, 0.8); border-color: rgba(255, 200, 100, 0.4);">
+                    <div class="file-icon">⬆️</div>
                     <div class="file-name">.. (Go Back)</div>
                     <div class="file-info">Return to parent folder</div>
                 </div>
@@ -133,10 +146,13 @@ async function loadFiles(path = '') {
             const description = folder.description || 'Click to open folder';
             
             return `
-                <div class="file-card folder-card" onclick="loadFiles('${folderFullPath}')">
+                <div class="file-card folder-card" onclick="loadFiles('${folderFullPath}')" style="cursor: pointer;">
                     <div class="file-icon">📁</div>
                     <div class="file-name">${displayName}</div>
                     <div class="file-info">${description}</div>
+                    <div class="file-actions">
+                        <button class="action-btn" onclick="event.stopPropagation(); loadFiles('${folderFullPath}')" style="width: 100%;">OPEN FOLDER</button>
+                    </div>
                 </div>
             `;
         }).join('');
@@ -154,7 +170,7 @@ async function loadFiles(path = '') {
                     <div class="file-info">${description}</div>
                     <div class="file-actions">
                         <button class="action-btn" onclick="viewFile('${filePath}', '${displayName.replace(/'/g, "\\'")}')">VIEW</button>
-                        <a href="${filePath}" download class="action-btn download">DOWNLOAD</a>
+                        <a href="${filePath}" download="${file.filename}" class="action-btn download">DOWNLOAD</a>
                     </div>
                 </div>
             `;
@@ -168,15 +184,24 @@ async function loadFiles(path = '') {
         filesGrid.innerHTML = `
             <div class="empty-state" style="grid-column: 1 / -1;">
                 <div class="empty-icon">⚠️</div>
-                <p>Could not load file list</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem;">
-                    Make sure storage/files.json exists and is properly formatted
+                <p style="color: rgba(255, 150, 150, 0.9);">Could not load file list</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+                    ${error.message}
                 </p>
-                ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1rem;">← Back to Main</button>` : ''}
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                    Make sure the files.json exists at the correct location
+                </p>
+                ${path ? `<button class="action-btn" onclick="loadFiles('')" style="margin-top: 1.5rem;">← Back to Main Storage</button>` : ''}
             </div>
         `;
         fileCount.textContent = 'Error loading files';
     }
+}
+
+// Helper function to go back
+function goBack() {
+    const parentPath = currentPath.split('/').slice(0, -1).join('/');
+    loadFiles(parentPath);
 }
 
 // Initialize
@@ -195,6 +220,15 @@ async function viewFile(filePath, fileName) {
     modalDownload.download = fileName;
     
     const extension = filePath.split('.').pop().toLowerCase();
+    
+    // Show loading state
+    modalBody.innerHTML = `
+        <p style="text-align: center; padding: 3rem;">
+            <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">⏳</span>
+            Loading file...
+        </p>
+    `;
+    modal.classList.add('active');
     
     try {
         // Text files - read and display content
@@ -240,8 +274,6 @@ async function viewFile(filePath, fileName) {
             `;
         }
         
-        modal.classList.add('active');
-        
     } catch (error) {
         console.error('Error loading file:', error);
         modalBody.innerHTML = `
@@ -251,7 +283,6 @@ async function viewFile(filePath, fileName) {
                 Please try downloading it instead.
             </p>
         `;
-        modal.classList.add('active');
     }
 }
 
