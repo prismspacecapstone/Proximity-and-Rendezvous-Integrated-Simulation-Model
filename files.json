@@ -1,19 +1,9 @@
 {
   "files": [
     {
-      "filename": "example-document.pdf",
-      "name": "Example Document",
-      "description": "Sample PDF file"
-    },
-    {
-      "filename": "mission-report.docx",
-      "name": "Mission Report",
-      "description": "Project documentation"
-    },
-    {
-      "filename": "team-photo.jpg",
-      "name": "Team Photo",
-      "description": "Group picture"
+      "filename": "ph.txt",
+      "name": "ph.txt",
+      "description": "Sample .txt file"
     }
   ]
 }
