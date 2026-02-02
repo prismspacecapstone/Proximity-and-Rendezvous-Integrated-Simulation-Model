@@ -1,6 +1,6 @@
 # PRISM File Storage Browser
 
-This is a themed file browser page that allows users to view and download files from a `/storage` folder.
+This is a themed file browser page that allows users to view and download files from a `/storage` folder with support for subfolders.
 
 ## Setup Instructions for Static Websites
 
@@ -10,15 +10,22 @@ your-website/
 ├── index.html
 ├── storage.html
 ├── storage.js
-└── storage/              ← Create this folder
-    ├── files.json        ← List of your files (REQUIRED)
-    ├── file1.pdf         ← Your actual files
-    ├── file2.docx
-    └── file3.jpg
+└── storage/              ← Main storage folder
+    ├── files.json        ← List of files/folders (REQUIRED)
+    ├── file1.pdf         ← Root level files
+    ├── file2.txt
+    ├── documents/        ← Subfolder example
+    │   ├── files.json    ← Each subfolder needs its own files.json
+    │   ├── doc1.pdf
+    │   └── doc2.docx
+    └── images/           ← Another subfolder
+        ├── files.json
+        ├── photo1.jpg
+        └── photo2.png
 ```
 
-### 2. Create the files.json File
-Inside the `storage` folder, create a file called `files.json` that lists all your files:
+### 2. Create the Main files.json File
+Inside the `storage` folder, create `files.json` that lists your files AND folders:
 
 ```json
 {
@@ -29,23 +36,72 @@ Inside the `storage` folder, create a file called `files.json` that lists all yo
       "description": "Annual mission report"
     },
     {
-      "filename": "technical-specs.docx",
-      "name": "Technical Specifications",
-      "description": "System requirements and specs"
+      "filename": "readme.txt",
+      "name": "README",
+      "description": "Getting started guide"
+    }
+  ],
+  "folders": [
+    {
+      "foldername": "documents",
+      "name": "Documents",
+      "description": "All project documents"
     },
     {
-      "filename": "team-photo.jpg",
-      "name": "Team Photo",
-      "description": "Our amazing team"
+      "foldername": "images",
+      "name": "Image Gallery",
+      "description": "Photos and graphics"
     }
   ]
 }
 ```
 
-**Field explanation:**
-- `filename` - The actual file name in the storage folder (REQUIRED)
-- `name` - Display name shown on the page (optional, defaults to filename)
-- `description` - Text shown under the file name (optional, defaults to "Click to view or download")
+### 3. Create files.json for Each Subfolder
+**For `storage/documents/files.json`:**
+```json
+{
+  "files": [
+    {
+      "filename": "technical-spec.pdf",
+      "name": "Technical Specifications"
+    },
+    {
+      "filename": "requirements.docx",
+      "name": "Requirements Doc"
+    }
+  ],
+  "folders": []
+}
+```
+
+**For `storage/images/files.json`:**
+```json
+{
+  "files": [
+    {
+      "filename": "team-photo.jpg",
+      "name": "Team Photo 2025"
+    },
+    {
+      "filename": "logo.png",
+      "name": "Company Logo"
+    }
+  ],
+  "folders": []
+}
+```
+
+### 4. Field Explanations
+
+**For Files:**
+- `filename` - The actual file name in the folder (REQUIRED)
+- `name` - Display name shown on the page (optional)
+- `description` - Text shown under the file name (optional)
+
+**For Folders:**
+- `foldername` - The actual folder name (REQUIRED, must match the folder on your server)
+- `name` - Display name shown on the page (optional)
+- `description` - Text shown under the folder name (optional)
 
 ### 3. Add Your Files
 Place all your actual files in the `storage` folder alongside `files.json`.
@@ -71,7 +127,7 @@ Add a link to your storage page in `index.html`:
 
 ## Quick Example
 
-If you have these files in your storage folder:
+**Example 1: Files only (no subfolders)**
 ```
 storage/
 ├── files.json
@@ -79,20 +135,81 @@ storage/
 └── image.png
 ```
 
-Your `files.json` should look like:
+Your `files.json`:
 ```json
 {
   "files": [
     {
       "filename": "report.pdf",
-      "name": "Annual Report",
-      "description": "2025 financial report"
+      "name": "Annual Report"
     },
     {
       "filename": "image.png",
       "name": "Company Logo"
     }
+  ],
+  "folders": []
+}
+```
+
+**Example 2: With subfolders**
+```
+storage/
+├── files.json
+├── readme.txt
+├── documents/
+│   ├── files.json
+│   └── spec.pdf
+└── photos/
+    ├── files.json
+    └── team.jpg
+```
+
+**Main `storage/files.json`:**
+```json
+{
+  "files": [
+    {
+      "filename": "readme.txt",
+      "name": "README"
+    }
+  ],
+  "folders": [
+    {
+      "foldername": "documents",
+      "name": "Documents"
+    },
+    {
+      "foldername": "photos",
+      "name": "Photos"
+    }
   ]
+}
+```
+
+**`storage/documents/files.json`:**
+```json
+{
+  "files": [
+    {
+      "filename": "spec.pdf",
+      "name": "Specifications"
+    }
+  ],
+  "folders": []
+}
+```
+
+**`storage/photos/files.json`:**
+```json
+{
+  "files": [
+    {
+      "filename": "team.jpg",
+      "name": "Team Photo"
+    }
+  ],
+  "folders": []
 }
 ```
 
@@ -105,6 +222,9 @@ To add or remove files:
 
 ## Features
 
+- **Folder Navigation** - Browse through subfolders, click folders to open them
+- **Breadcrumb Navigation** - See current path (e.g., 📁 /storage/documents)
+- **Back Button** - Easy navigation back to parent folders
 - **File Viewer** - View file contents directly in a modal popup without downloading
 - **Supported preview types:**
   - **Text files** (TXT, MD, JSON, XML, CSV, HTML, CSS, JS) - Read contents directly
@@ -112,8 +232,8 @@ To add or remove files:
   - **PDFs** - Read PDFs in browser
   - **Videos** (MP4, WEBM, OGG) - Play videos inline
   - **Audio** (MP3, WAV, OGG) - Play audio files
-- **Simple configuration** - Just edit a JSON file
-- **File type icons** - Automatic icons for different file types
+- **Simple configuration** - Just edit JSON files
+- **File type icons** - Automatic icons for files and 📁 for folders
 - **View & Download** - Each file has buttons to view in modal or download directly
 - **PRISM theme** - Matches your existing space-themed design
 - **Responsive** - Works on desktop and mobile devices
@@ -144,6 +264,12 @@ The page recognizes and displays icons for:
 - PDFs, images, and text files should view in browser
 
 ## How to Use
+
+**Navigating Folders:**
+1. Folders appear with a 📁 icon and yellow/orange glow when you hover
+2. Click any folder to open it and see its contents
+3. The path at the top shows where you are (e.g., 📁 /storage/documents)
+4. Click the ".. (Go Back)" card or the back button to return to the parent folder
 
 **Viewing Files:**
 1. Click the **VIEW** button on any file
