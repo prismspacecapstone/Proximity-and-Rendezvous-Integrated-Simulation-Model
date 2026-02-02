@@ -39,8 +39,11 @@ function getFileIcon(filename) {
         'jpeg': '🖼️',
         'png': '🖼️',
         'gif': '🖼️',
+        'webp': '🖼️',
+        'svg': '🎨',
         'mp4': '🎬',
         'mp3': '🎵',
+        'wav': '🎵',
         'zip': '📦',
         'rar': '📦',
         'exe': '⚙️',
@@ -53,7 +56,8 @@ function getFileIcon(filename) {
         'xls': '📊',
         'xlsx': '📊',
         'ppt': '📊',
-        'pptx': '📊'
+        'pptx': '📊',
+        'md': '📝'
     };
     return icons[ext] || '📄';
 }
@@ -139,7 +143,7 @@ async function loadFiles(path = '') {
             `;
         }
         
-        // Create folder cards
+        // Create folder cards with download option
         const folderCards = folders.map(folder => {
             const folderFullPath = path ? `${path}/${folder.foldername}` : folder.foldername;
             const displayName = folder.name || folder.foldername;
@@ -151,7 +155,8 @@ async function loadFiles(path = '') {
                     <div class="file-name">${displayName}</div>
                     <div class="file-info">${description}</div>
                     <div class="file-actions">
-                        <button class="action-btn" onclick="event.stopPropagation(); loadFiles('${folderFullPath}')" style="width: 100%;">OPEN FOLDER</button>
+                        <button class="action-btn" onclick="event.stopPropagation(); loadFiles('${folderFullPath}')">OPEN</button>
+                        <button class="action-btn download" onclick="event.stopPropagation(); downloadFolder('${folderFullPath}', '${displayName.replace(/'/g, "\\'")}')">DOWNLOAD ZIP</button>
                     </div>
                 </div>
             `;
@@ -196,6 +201,126 @@ async function loadFiles(path = '') {
         `;
         fileCount.textContent = 'Error loading files';
     }
+}
+
+// Download entire folder as ZIP
+async function downloadFolder(folderPath, folderName) {
+    // Show loading indicator
+    const modal = document.getElementById('fileModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    
+    modalTitle.textContent = 'Preparing Download...';
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
+            <p style="margin-bottom: 1rem;">Creating ZIP file for: <strong>${folderName}</strong></p>
+            <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">This may take a moment...</p>
+        </div>
+    `;
+    modal.classList.add('active');
+
+    try {
+        // Load JSZip library dynamically if not already loaded
+        if (typeof JSZip === 'undefined') {
+            await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+        }
+
+        const zip = new JSZip();
+        
+        // Recursively add files from folder
+        await addFolderToZip(zip, folderPath, '');
+        
+        // Generate the zip file
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚙️</div>
+                <p>Generating ZIP file...</p>
+            </div>
+        `;
+        
+        const blob = await zip.generateAsync({ type: 'blob' });
+        
+        // Create download link
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${folderName.replace(/[^a-z0-9]/gi, '_')}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Show success message
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">✓</div>
+                <p style="color: #4CAF50; font-size: 1.2rem; margin-bottom: 1rem;">Download Started!</p>
+                <p style="color: rgba(255, 255, 255, 0.8);">Your ZIP file should start downloading.</p>
+                <button class="action-btn" onclick="closeModal()" style="margin-top: 2rem; width: 200px;">CLOSE</button>
+            </div>
+        `;
+        
+    } catch (error) {
+        console.error('Error creating ZIP:', error);
+        modalBody.innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                <p style="color: rgba(255, 100, 100, 0.9); margin-bottom: 1rem;">Error creating ZIP file</p>
+                <p style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">${error.message}</p>
+                <button class="action-btn" onclick="closeModal()" style="margin-top: 2rem; width: 200px;">CLOSE</button>
+            </div>
+        `;
+    }
+}
+
+// Recursively add folder contents to ZIP
+async function addFolderToZip(zip, folderPath, zipPath) {
+    const jsonPath = `storage/${folderPath}/files.json`;
+    
+    try {
+        const response = await fetch(jsonPath);
+        if (!response.ok) throw new Error('files.json not found');
+        
+        const data = await response.json();
+        const files = data.files || [];
+        const folders = data.folders || [];
+        
+        // Add all files
+        for (const file of files) {
+            const filePath = `storage/${folderPath}/${file.filename}`;
+            const fileName = zipPath ? `${zipPath}/${file.filename}` : file.filename;
+            
+            try {
+                const fileResponse = await fetch(filePath);
+                const blob = await fileResponse.blob();
+                zip.file(fileName, blob);
+            } catch (err) {
+                console.error(`Error adding file ${file.filename}:`, err);
+            }
+        }
+        
+        // Recursively add subfolders
+        for (const folder of folders) {
+            const subFolderPath = `${folderPath}/${folder.foldername}`;
+            const subZipPath = zipPath ? `${zipPath}/${folder.foldername}` : folder.foldername;
+            await addFolderToZip(zip, subFolderPath, subZipPath);
+        }
+        
+    } catch (error) {
+        console.error(`Error processing folder ${folderPath}:`, error);
+    }
+}
+
+// Load external script
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
 }
 
 // Helper function to go back
