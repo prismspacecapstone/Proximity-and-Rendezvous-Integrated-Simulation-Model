@@ -182,15 +182,6 @@
                 comet.style.transform = `translateY(${scrollY * 0.4}px)`;
             }
         });
-
-        // Blog post click handlers
-        blogPosts.forEach(post => {
-            post.addEventListener('click', function(e) {
-                // Allow links to work normally
-                if (e.target.tagName === 'A' || e.target.closest('a')) {
-                    return;
-                }
-                e.preventDefault();
                 
                 // Add click effect
                 this.style.transform = 'translateY(-8px) scale(0.98)';
