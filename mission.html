@@ -195,8 +195,8 @@
             margin-bottom: 1rem;
         }
 
-        /* GIF Placeholder Styles */
-        .gif-placeholder {
+        /* ─── GIF Display Section ─── */
+        .gif-section {
             background: linear-gradient(135deg, 
                 rgba(255, 255, 255, 0.03) 0%,
                 rgba(50, 205, 50, 0.06) 50%,
@@ -208,78 +208,56 @@
             text-align: center;
         }
 
-        .placeholder-title {
+        .gif-section-title {
             color: rgba(255, 255, 255, 0.9);
             font-size: 1.4rem;
             letter-spacing: 0.1em;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             font-weight: 600;
         }
 
-        .placeholder-container {
+        .gif-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1rem;
         }
 
-        .placeholder-gif-box {
-            width: 400px;
-            height: 300px;
-            background: linear-gradient(135deg, 
-                rgba(138, 43, 226, 0.1) 0%,
-                rgba(50, 205, 50, 0.1) 50%,
-                rgba(255, 215, 0, 0.1) 100%);
-            border: 2px dashed rgba(255, 255, 255, 0.3);
+        .gif-frame {
             border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
-        }
-
-        .placeholder-gif-box img {
-            position: relative;
-            z-index: 10;
+            background: #000;           /* dark fallback while loading */
+            box-shadow:
+                0 0 20px rgba(138, 43, 226, 0.25),
+                0 0 60px rgba(50, 205, 50, 0.1);
+            /* let the image define its own natural size, capped at container width */
             max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            display: block;
+            width: fit-content;
+            margin: 0 auto;
         }
 
-        .placeholder-gif-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent 30%, 
-                rgba(255, 255, 255, 0.05) 50%, 
-                transparent 70%);
-            transform: rotate(45deg);
-            animation: shimmer 3s ease-in-out infinite;
-            z-index: 1;
+        .gif-frame img {
+            display: block;            /* kill inline-block whitespace gap */
+            max-width: 100%;
+            height: auto;              /* preserve aspect ratio naturally */
         }
 
-        .placeholder-text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            z-index: 2;
-            position: relative;
-        }
-
-        .placeholder-description {
+        .gif-caption {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1rem;
             line-height: 1.5;
             font-style: italic;
             max-width: 500px;
         }
+
+        /* responsive cap so it doesn't overflow on smaller screens */
+        @media (max-width: 768px) {
+            .gif-frame {
+                max-width: calc(100% - 2rem);
+            }
+        }
+        /* ─── End GIF Display ─── */
 
         /* Mission objectives styles */
         .mission-objectives {
@@ -629,12 +607,6 @@
             100% { transform: rotate(360deg) scale(1); }
         }
 
-        @keyframes shimmer {
-            0% { transform: rotate(45deg) translateX(-200%); }
-            50% { transform: rotate(45deg) translateX(0%); }
-            100% { transform: rotate(45deg) translateX(200%); }
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .objectives-grid {
@@ -673,11 +645,6 @@
                 margin: 1rem;
             }
 
-            .placeholder-gif-box {
-                width: 300px;
-                height: 225px;
-            }
-
             .objectives-grid {
                 grid-template-columns: 1fr;
             }
@@ -714,11 +681,6 @@
             
             .main-content {
                 padding: 2rem 1rem 1rem;
-            }
-
-            .placeholder-gif-box {
-                width: 250px;
-                height: 180px;
             }
 
             .objective-section {
@@ -766,22 +728,19 @@
                 <p>At PRISM, our mission is to design, build, and validate a budget friendly, scalable 3DOF satellite platform that can demonstrate key technologies for safe and precise Rendezvous and Proximity Operations (RPO). As space becomes increasingly crowded, the ability to approach, dock, service, or refuel spacecraft is more critical than ever. PRISM aims to advance these capabilities at the undergraduate level, bridging classroom theory with real-world engineering challenges.</p>
             </div>
 
-            <div class="gif-placeholder">
-                <h3 class="placeholder-title">Vehicle Navigation</h3>
-                <div class="placeholder-container">
-
-                    <div class="placeholder-gif-box">
-                        <img 
-                            src="images/SimulinkAnimationGIF.gif" 
-                            alt="RPO Animation"
-                        >
+            <!-- ─── GIF Display (was placeholder) ─── -->
+            <div class="gif-section">
+                <h3 class="gif-section-title">RPO Visualization</h3>
+                <div class="gif-wrapper">
+                    <div class="gif-frame">
+                        <img src="images/SimAnim1GIF.gif" alt="RPO Animation">
                     </div>
-
-                    <div class="placeholder-description">
-                        Simulink animation showing point to point navigation of a mock-satellite
-                    </div>
+                    <p class="gif-caption">
+                        RPO demonstration animation showing autonomous approach, inspection orbit, and rendezvous sequence
+                    </p>
                 </div>
             </div>
+            <!-- ─── End GIF ─── -->
 
             <div class="mission-objectives">
                 <div class="objectives-grid">
