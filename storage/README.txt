@@ -1,228 +1,189 @@
-# 🌟 PRISM Capstone Project Archive 🌟
+# PRISM CAPSTONE PROJECT ARCHIVE
+
+    ╔══════════════════════════════════════════════════════════════╗
+    ║                                                              ║
+    ║           ██████╗ ██████╗ ██╗███████╗███╗   ███╗             ║
+    ║           ██╔══██╗██╔══██╗██║██╔════╝████╗ ████║             ║
+    ║           ██████╔╝██████╔╝██║███████╗██╔████╔██║             ║
+    ║           ██╔═══╝ ██╔══██╗██║╚════██║██║╚██╔╝██║             ║
+    ║           ██║     ██║  ██║██║███████║██║ ╚═╝ ██║             ║
+    ║           ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝     ╚═╝             ║
+    ║                                                              ║
+    ║             Your Gateway to Project Excellence               ║
+    ╚══════════════════════════════════════════════════════════════╝
+
+## WELCOME ABOARD
+
+You've just entered the **PRISM Project Command Center** – your one-stop mission control 
+for all things related to our capstone adventure! Whether you're hunting for specifications, 
+diving into technical docs, or just want to see some epic visuals, you're in the right place.
+
+---
+
+## WHAT'S INSIDE THIS ARCHIVE
+
+### SPECIFICATION DOCUMENTS
+All the nitty-gritty details that make PRISM tick! From requirements to technical specs.
 
 ```
-    ╔═══════════════════════════════════════════════════════════════╗
-    ║                                                               ║
-    ║   ██████╗ ██████╗ ██╗███████╗███╗   ██╗                     ║
-    ║   ██╔══██╗██╔══██╗██║██╔════╝████╗  ██║                     ║
-    ║   ██████╔╝██████╔╝██║███████╗██╔██╗ ██║                     ║
-    ║   ██╔═══╝ ██╔══██╗██║╚════██║██║╚██╗██║                     ║
-    ║   ██║     ██║  ██║██║███████║██║ ╚████║                     ║
-    ║   ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝                     ║
-    ║                                                               ║
-    ║              Your Gateway to Project Excellence               ║
-    ╚═══════════════════════════════════════════════════════════════╝
+    [====] System Requirements
+    [====] Design Specifications  
+    [====] Component Datasheets
+    [====] Test Procedures
+    [====] Safety Protocols
+```
+
+### VIDEOS & DEMOS
+Watch PRISM come to life through our video library.
+
+```
+    [>>] Assembly Timelapse
+    [>>] System Tests & Demos
+    [>>] Team Presentations
+    [>>] Progress Updates
+    [>>] Final Showcase
+```
+
+### IMAGES & DIAGRAMS
+A picture is worth a thousand words – we've got lots of pictures!
+
+```
+    [**] CAD Renders
+    [**] Circuit Diagrams
+    [**] Assembly Photos
+    [**] Test Results
+    [**] Team Photos
+    [**] Progress Snapshots
 ```
 
 ---
 
-## 🚀 Welcome Aboard, Space Cadet!
-
-You've just entered the **PRISM Project Command Center** – your one-stop mission control for all things related to our capstone adventure! Whether you're hunting for specifications, diving into technical docs, or just want to see some epic visuals, you're in the right place.
+## NAVIGATION GUIDE
 
 ```
-       .
-      ":"
-    ___:____     |"\/"|
-  ,'        `.    \  /
-  |  O        \___/  |
-~^~^~^~^~^~^~^~^~^~^~^~^~
+    +------------------------------------------+
+    |  Start Here -> Browse Folders -> Find   |
+    |  What You Need -> Download -> Success!  |
+    +------------------------------------------+
 ```
 
----
-
-## 📂 What's Inside This Treasure Chest?
-
-### 📋 **Specification Documents**
-All the nitty-gritty details that make PRISM tick! From requirements to technical specs, we've got you covered.
-
+### FOLDER STRUCTURE - Subject to change
 ```
-    📄 System Requirements
-    📄 Design Specifications  
-    📄 Component Datasheets
-    📄 Test Procedures
-    📄 Safety Protocols
-```
-
-### 🔗 **Important Links**
-Quick access to everything you need on the web!
-
-```
-    🌐 Project Management Dashboard
-    🌐 Team Collaboration Portal
-    🌐 Resource Libraries
-    🌐 Vendor Documentation
-    🌐 Research References
-```
-
-### 🎬 **Videos & Demos**
-Lights, camera, action! Watch PRISM come to life through our video library.
-
-```
-    🎥 Assembly Timelapse
-    🎥 System Tests & Demos
-    🎥 Team Presentations
-    🎥 Progress Updates
-    🎥 Final Showcase
-```
-
-### 🖼️ **Images & Diagrams**
-A picture is worth a thousand words – we've got thousands of pictures!
-
-```
-    📸 CAD Renders
-    📸 Circuit Diagrams
-    📸 Assembly Photos
-    📸 Test Results
-    📸 Team Photos
-    📸 Progress Snapshots
+[ROOT] PRISM-Archive
+ |
+ +--[DIR] 01-Specifications
+ |   |
+ |   +--[DIR] Requirements
+ |   +--[DIR] Design-Docs
+ |   +--[DIR] Datasheets
+ |
+ +--[DIR] 02-Links
+ |   |
+ |   +--[FILE] bookmarks.md
+ |
+ +--[DIR] 03-Videos
+ |   |
+ |   +--[DIR] Demonstrations
+ |   +--[DIR] Presentations
+ |   +--[DIR] Tutorials
+ |
+ +--[DIR] 04-Images
+ |   |
+ |   +--[DIR] CAD-Renders
+ |   +--[DIR] Photos
+ |   +--[DIR] Diagrams
+ |   +--[DIR] Schematics
+ |
+ +--[FILE] README.md (You are here!)
 ```
 
 ---
 
-## 🗺️ Navigation Guide
+## QUICK START MISSION CHECKLIST
 
 ```
-    ┌─────────────────────────────────────────┐
-    │  Start Here → Browse Folders → Find    │
-    │  What You Need → Download → Profit! 🎉  │
-    └─────────────────────────────────────────┘
-```
-
-### Folder Structure
-```
-📦 PRISM-Archive
- ┣ 📂 01-Specifications
- ┃ ┣ 📂 Requirements
- ┃ ┣ 📂 Design-Docs
- ┃ ┗ 📂 Datasheets
- ┣ 📂 02-Links
- ┃ ┗ 📄 bookmarks.md
- ┣ 📂 03-Videos
- ┃ ┣ 📂 Demonstrations
- ┃ ┣ 📂 Presentations
- ┃ ┗ 📂 Tutorials
- ┣ 📂 04-Images
- ┃ ┣ 📂 CAD-Renders
- ┃ ┣ 📂 Photos
- ┃ ┣ 📂 Diagrams
- ┃ ┗ 📂 Schematics
- ┗ 📄 README.md (You are here! 👋)
+    [ ] Read through the main specification document
+    [ ] Check out the design diagrams
+    [ ] Watch the project overview video
+    [ ] Browse the assembly photos
+    [ ] Bookmark important links
+    [ ] Get inspired and start exploring!
 ```
 
 ---
 
-## 🎯 Quick Start Mission Checklist
-
-- [ ] 📖 Read through the main specification document
-- [ ] 🔍 Check out the design diagrams
-- [ ] 🎥 Watch the project overview video
-- [ ] 🖼️ Browse the assembly photos
-- [ ] 🔗 Bookmark important links
-- [ ] 🚀 Get inspired and start exploring!
-
----
-
-## 💡 Pro Tips for Explorers
+## PRO TIPS FOR EXPLORERS
 
 ```
-    ╔══════════════════════════════════════════╗
-    ║  💎 TIP: Use Ctrl+F to search files     ║
-    ║  💎 TIP: Check file dates for latest    ║
-    ║  💎 TIP: Read specs before watching     ║
-    ║  💎 TIP: Keep backups of everything!    ║
-    ╚══════════════════════════════════════════╝
+    +============================================+
+    |  ** TIP: Use Ctrl+F to search files       |
+    |  ** TIP: Check file dates for latest      |
+    |  ** TIP: Read specs before watching       |
+    |  ** TIP: Keep backups of everything!      |
+    +============================================+
 ```
 
 ---
 
-## 👥 Meet The Team
+## PROJECT INFORMATION
 
+### TEAM MEMBERS
 ```
-    👨‍🚀  👩‍🚀  👨‍🚀  👩‍🚀  👨‍🚀
-     
-    The brilliant minds behind PRISM!
-    Check the team photos in 04-Images/Photos/Team
+    +-----------------+--------------------+
+    | Name            | Role               |
+    +-----------------+--------------------+
+    |  Tanner Whitney |   Project Lead     |
+    |    Ryan Coder   |   Chief Engineer   |
+    |   Owen Glascoe  |   Propulsion       |
+    |    Isiah Gale   |   Software         |
+    |   Thomas Allen  |   Structure        |
+    |  Zach McKissor  |   Hardware         |
+    +-----------------+--------------------+
+```
+### KEY MILESTONES
+```
+    [x] Concept Development
+    [x] Design Phase
+    [x] Prototyping
+    [ ] Testing & Validation
+    [ ] Final Assembly
+    [x] Documentation
+    [ ] Presentation
 ```
 
 ---
 
-## 🎨 Version History
-
-| Version | Date | Description |
-|---------|------|-------------|
-| 🌱 v1.0 | Initial Setup | Project kickoff and structure |
-| 🌿 v2.0 | Midterm Review | Design finalization |
-| 🌳 v3.0 | Final Delivery | Complete documentation |
-
----
-
-## 🏆 Project Milestones
+## PROJECT STATISTICS
 
 ```
-    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100% Complete!
+    +------------------------+------------------+
+    | Metric                 | Value            |
+    +------------------------+------------------+
+    | Total Files            |        ALOT      |
+    | Team Members           |         6        |
+    | Project Duration       |    2 Semesters   |
+    | Current Status         |    In-Progress   |
+    +------------------------+------------------+
+```
+
+
+## ACKNOWLEDGMENTS
+
+    ___________________________________________
+    Special thanks to:
     
-    ✅ Concept Development
-    ✅ Design Phase
-    ✅ Prototyping
-    ✅ Testing & Validation
-    ✅ Final Assembly
-    ✅ Documentation
-    ✅ Presentation
-```
-
----
-
-## 📞 Need Help?
-
-Got questions? Lost in the files? Can't find that one diagram?
-
-```
-    ┌────────────────────────────────┐
-    │  🆘 Don't Panic!              │
-    │                                │
-    │  Check the index files first   │
-    │  Ask your team members         │
-    │  Review the changelog          │
-    └────────────────────────────────┘
-```
-
----
-
-## 🎉 Fun Facts
-
-- 📊 **Total Files:** Growing every day!
-- 💾 **Storage Used:** Worth every byte!
-- ⏱️ **Hours Invested:** Countless (but who's counting?)
-- ☕ **Coffee Consumed:** Definitely too much
-- 🌟 **Awesome Factor:** Off the charts!
-
----
-
-## 🌈 Thank You for Visiting!
-
-```
-    ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
+    Dr. Siwei Fan
+    Dr. Matthew Haslam
     
-    Remember: Great projects are built
-    one file at a time! 
-    
-    Happy exploring! 🚀
-    
-    ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
-```
+    ___________________________________________
 
----
-
-<div align="center">
-
-**Made with ❤️ by the PRISM Team**
+**MADE BY THE PRISM TEAM**
 
 ```
     ___________________
    |  _____________  |
    | |             | |
-   | | PRISM  v3.0 | |
+   | | PRISM  v1.0 | |
    | |_____________| |
    |_________________|
         _[_______]_
@@ -232,12 +193,4 @@ Got questions? Lost in the files? Can't find that one diagram?
    L___________________J
 ```
 
-*"Reaching for the stars, one line of code at a time!"* ✨
-
-</div>
-
----
-
-**Last Updated:** February 2026  
-**Maintained By:** PRISM Capstone Team  
-**Status:** 🟢 Active & Awesome
+*"Reaching for the stars, one line of code at a time!"*
