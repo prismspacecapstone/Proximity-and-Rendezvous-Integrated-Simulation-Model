@@ -1,21 +1,54 @@
-{
   "files": [
     {
-      "filename": "ph.txt",
-      "name": "ph.txt",
-      "description": "Sample .txt file"
-    }
-  ],
-  "folders": [
-    {
-      "foldername": "Air Table 2.0",
-      "name": "Air Table Drawings",
-      "description": "Drawings for the current Air Table"
+      "filename": "ESTACK.pdf",
+      "name": "ESTACK",
+      "description": "Electrical stack assembly"
     },
     {
-      "foldername": "MockSat 3.0 Drawings",
-      "name": "MockSat Drawings",
-      "description": "Drawings for the current Mock-Satellite"
+      "filename": "MOCKSAT 3.0.pdf",
+      "name": "MockSat 3.0",
+      "description": "Main MockSat 3.0 assembly drawing"
+    },
+    {
+      "filename": "MOCKSAT FOOTPRINT.pdf",
+      "name": "MockSat Footprint",
+      "description": "Footprint dimensions and mounting layout"
+    },
+    {
+      "filename": "MOCKSAT FRAME.pdf",
+      "name": "MockSat Frame",
+      "description": "Frame structure for MockSat"
+    },
+    {
+      "filename": "MOCKSAT Lid.pdf",
+      "name": "MockSat Lid",
+      "description": "Lid component for MockSat"
+    },
+    {
+      "filename": "PLATE LEVEL 1.pdf",
+      "name": "Plate Level 1",
+      "description": "First level plate component"
+    },
+    {
+      "filename": "PLATE LEVEL 2.pdf",
+      "name": "Plate Level 2",
+      "description": "Second level plate component"
+    },
+    {
+      "filename": "PLATE LEVEL 3.pdf",
+      "name": "Plate Level 3",
+      "description": "Third level plate component"
+    },
+    {
+      "filename": "PLATE LEVEL 4.pdf",
+      "name": "Plate Level 4",
+      "description": "Fourth level plate component"
+    },
+    {
+      "filename": "PLATE LEVEL 5.pdf",
+      "name": "Plate Level 5",
+      "description": "Fifth level plate component"
     }
-  ]
+  ],
+  "folders": []
 }
