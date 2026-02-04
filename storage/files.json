@@ -4,38 +4,18 @@
       "filename": "ph.txt",
       "name": "ph.txt",
       "description": "Sample .txt file"
-    },
-    {
-      "filename": "7 - Symposium Poster (Prelim).pdf",
-      "name": "7 - Symposium Poster (Prelim).pdf",
-      "description": "Sample .txt file"
-    },
-    {
-      "filename": "SRD 2.0.docx",
-      "name": "SRD 2.0.docx",
-      "description": "Sample .txt file"
-    },
-    {
-      "filename": "ph.txt",
-      "name": "ph.txt",
-      "description": "Sample .txt file"
-    },
-    {
-      "filename": "20260128_113146.jpg",
-      "name": "20260128_113146.jpg",
-      "description": "Sample .txt file"
-    },
-    {
-      "filename": "20260129_115928.jpg",
-      "name": "20260129_115928.jpg",
-      "description": "Sample .txt file"
     }
   ],
   "folders": [
     {
-      "foldername": "testfolder",
-      "name": "testfolder",
-      "description": "All project documents"
+      "foldername": "Air Table 2.0",
+      "name": "Air Table Drawings",
+      "description": "Drawings for the current Air Table"
+    },
+    {
+      "foldername": "MockSat 3.0 Drawings",
+      "name": "MockSat Drawings",
+      "description": "Drawings for the current Mock-Satellite"
     }
   ]
 }
