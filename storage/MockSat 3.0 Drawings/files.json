@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "filename": "ph.txt",
+      "name": "ph.txt",
+      "description": "Sample .txt file"
+    }
+  ],
+  "folders": [
+    {
+      "foldername": "Air Table 2.0",
+      "name": "Air Table Drawings",
+      "description": "Drawings for the current Air Table"
+    },
+    {
+      "foldername": "MockSat 3.0 Drawings",
+      "name": "MockSat Drawings",
+      "description": "Drawings for the current Mock-Satellite"
+    }
+  ]
+}
