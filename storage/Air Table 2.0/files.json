@@ -1,21 +1,45 @@
 {
   "files": [
     {
-      "filename": "ph.txt",
-      "name": "ph.txt",
-      "description": "Sample .txt file"
-    }
-  ],
-  "folders": [
-    {
-      "foldername": "Air Table 2.0",
-      "name": "Air Table Drawings",
-      "description": "Drawings for the current Air Table"
+      "filename": "0 - Air Table ISO.PDF",
+      "name": "Air Table ISO",
+      "description": "Isometric view of the Air Table"
     },
     {
-      "foldername": "MockSat 3.0 Drawings",
-      "name": "MockSat Drawings",
-      "description": "Drawings for the current Mock-Satellite"
+      "filename": "1 - 2x4_Frame_Horizontal.PDF",
+      "name": "2x4 Frame Horizontal",
+      "description": "Horizontal frame component made from 2x4 lumber"
+    },
+    {
+      "filename": "2 - 2x4_Frame_Riser.PDF",
+      "name": "2x4 Frame Riser",
+      "description": "Riser frame component made from 2x4 lumber"
+    },
+    {
+      "filename": "3 - Bumper.pdf",
+      "name": "Bumper",
+      "description": "Bumper component drawing"
+    },
+    {
+      "filename": "4 - Plywood Wall.PDF",
+      "name": "Plywood Wall",
+      "description": "Plywood wall component"
+    },
+    {
+      "filename": "5 - Plywood Bottom Sheet.pdf",
+      "name": "Plywood Bottom Sheet",
+      "description": "Bottom sheet component made from plywood"
+    },
+    {
+      "filename": "6 - Interface Plate.PDF",
+      "name": "Interface Plate",
+      "description": "Interface plate component"
+    },
+    {
+      "filename": "7 - ShopVac-Table Insert.PDF",
+      "name": "ShopVac Table Insert",
+      "description": "Insert component for ShopVac table integration"
     }
-  ]
+  ],
+  "folders": []
 }
