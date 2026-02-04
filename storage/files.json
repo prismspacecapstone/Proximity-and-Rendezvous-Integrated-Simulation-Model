@@ -1,9 +1,9 @@
 {
   "files": [
     {
-      "filename": "ph.txt",
-      "name": "ph.txt",
-      "description": "Sample .txt file"
+      "filename": "README.txt",
+      "name": "Read Me",
+      "description": "Welcome to PRISM's public documents!"
     }
   ],
   "folders": [
