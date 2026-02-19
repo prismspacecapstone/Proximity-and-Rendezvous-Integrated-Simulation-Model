@@ -8,29 +8,24 @@
   ],
   "folders": [
     {
-      "foldername": "Air Table 2.0",
-      "name": "Air Table Drawings",
-      "description": "Drawings for the current Air Table"
-    },
-    {
-      "foldername": "MockSat 3.0 Drawings",
-      "name": "MockSat Drawings",
-      "description": "Drawings for the current Mock-Satellite"
-    },
-    {
-      "foldername": "Software",
-      "name": "Software",
-      "description": "Software for the MockSat and GTSS"
-    },
-    {
-      "foldername": "User Guides",
+      "foldername": "01-User Guides",
       "name": "User Documentation",
       "description": "Documentation for new users"
     },
     {
-      "foldername": "Media",
+      "foldername": "02-Media",
       "name": "Media",
       "description": "Images for PRISM"
+    },
+    {
+      "foldername": "03-Software",
+      "name": "Software",
+      "description": "Software for the MockSat and GTSS"
+    },
+    {
+      "foldername": "04-Project Documentation",
+      "name": "Documents",
+      "description": "Project documentation and any test data"
     }
   ]
 }
