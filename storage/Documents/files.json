@@ -1,1 +1,11 @@
-
+{
+  "files": [
+    {
+      "filename": "README.txt",
+      "name": "Read Me",
+      "description": "Welcome to PRISM's public documents!"
+    }
+  ],
+  "folders": [
+  ]
+}
