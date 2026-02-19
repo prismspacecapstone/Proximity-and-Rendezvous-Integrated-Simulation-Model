@@ -1,16 +1,11 @@
 {
   "files": [
     {
-      "filename": "placeholder",
-      "name": "Read Me",
-      "description": "Welcome to PRISM's public documents!"
+      "filename": "MockSatFlightSoftwarev3.1.ino",
+      "name": "MockSat Flight Software",
+      "description": "Arduino IDE Flight software for the Mock-Satellite"
     }
   ],
   "folders": [
-    {
-      "foldername": "placeholder",
-      "name": "Air Table Drawings",
-      "description": "Drawings for the current Air Table"
-    }
   ]
 }
