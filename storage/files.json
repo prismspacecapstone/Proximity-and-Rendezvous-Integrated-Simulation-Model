@@ -16,6 +16,16 @@
       "foldername": "MockSat 3.0 Drawings",
       "name": "MockSat Drawings",
       "description": "Drawings for the current Mock-Satellite"
+    },
+    {
+      "foldername": "Software",
+      "name": "Software",
+      "description": "Software for the MockSat and GTSS"
+    },
+    {
+      "foldername": "User Guides",
+      "name": "User Documentation",
+      "description": "Documentation for new users"
     }
   ]
 }
