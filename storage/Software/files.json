@@ -13,7 +13,7 @@
       "description": "MockSat Flight Software"
     },
     {
-      "foldername": "GTSS Software",
+      "foldername": "Ground-Truth Sensing Software",
       "name": "Ground-Truth Sensing Software",
       "description": "'Flight' software for the Ground-Truth Sensing System (GTSS)"
     }
