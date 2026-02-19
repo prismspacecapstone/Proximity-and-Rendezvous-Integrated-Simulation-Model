@@ -1,0 +1,11 @@
+{
+  "files": [
+    {
+      "filename": "teensyBluetooth.ino",
+      "name": "Bluetooth Test Script",
+      "description": "Script for testing HM-10 bluetoothb on a teensy 4.1"
+    }
+  ],
+  "folders": [
+  ]
+}
