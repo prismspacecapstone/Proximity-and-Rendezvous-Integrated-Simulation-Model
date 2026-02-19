@@ -26,6 +26,11 @@
       "foldername": "User Guides",
       "name": "User Documentation",
       "description": "Documentation for new users"
+    },
+    {
+      "foldername": "Media",
+      "name": "Media",
+      "description": "Images for PRISM"
     }
   ]
 }
