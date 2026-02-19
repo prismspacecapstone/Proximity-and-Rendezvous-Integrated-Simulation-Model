@@ -13,19 +13,19 @@
       "description": "Documentation for new users"
     },
     {
+      "foldername": "Documents",
+      "name": "02-Project Documentation",
+      "description": "Project documentation and any test data"
+    },
+    {
       "foldername": "Media",
-      "name": "02-Media",
+      "name": "03-Media",
       "description": "Images for PRISM"
     },
     {
       "foldername": "Software",
-      "name": "03-Software",
+      "name": "04-Software",
       "description": "Software for the MockSat and GTSS"
-    },
-    {
-      "foldername": "Documents",
-      "name": "04-Project Documentation",
-      "description": "Project documentation and any test data"
     }
   ]
 }
