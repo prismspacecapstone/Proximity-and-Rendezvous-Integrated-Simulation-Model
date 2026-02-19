@@ -7,5 +7,10 @@
     }
   ],
   "folders": [
+        {
+      "foldername": "Component Test Scripts",
+      "name": "Component Test Scripts",
+      "description": ".ino scripts for testing each individual component"
+    }
   ]
 }
