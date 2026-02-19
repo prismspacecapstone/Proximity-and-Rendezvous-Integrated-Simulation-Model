@@ -3,28 +3,28 @@
     {
       "filename": "README.txt",
       "name": "Read Me",
-      "description": "Welcome to PRISM's public documents!"
+      "description": "Read this for info"
     }
   ],
   "folders": [
     {
-      "foldername": "01-User Guides",
-      "name": "User Documentation",
+      "foldername": "User Guides",
+      "name": "01-User Guides",
       "description": "Documentation for new users"
     },
     {
-      "foldername": "02-Media",
-      "name": "Media",
+      "foldername": "Media",
+      "name": "02-Media",
       "description": "Images for PRISM"
     },
     {
-      "foldername": "03-Software",
-      "name": "Software",
+      "foldername": "Software",
+      "name": "03-Software",
       "description": "Software for the MockSat and GTSS"
     },
     {
-      "foldername": "04-Project Documentation",
-      "name": "Documents",
+      "foldername": "Documents",
+      "name": "04-Project Documentation",
       "description": "Project documentation and any test data"
     }
   ]
