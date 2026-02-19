@@ -1,11 +1,16 @@
 {
   "files": [
-    {
-      "filename": "README.txt",
-      "name": "Read Me",
-      "description": "Welcome to PRISM's public documents!"
-    }
   ],
   "folders": [
+    {
+      "foldername": "Air Table 2.0",
+      "name": "01-Air Table Drawings",
+      "description": "Drawings of the air table"
+    },
+    {
+      "foldername": "MockSat 3.0 Drawings",
+      "name": "02-MockSat Drawings",
+      "description": "Drwaings of the MockSat"
+    }
   ]
 }
