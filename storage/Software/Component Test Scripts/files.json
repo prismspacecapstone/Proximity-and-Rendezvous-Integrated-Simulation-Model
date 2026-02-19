@@ -3,7 +3,27 @@
     {
       "filename": "teensyBluetooth.ino",
       "name": "Bluetooth Test Script",
-      "description": "Script for testing HM-10 bluetoothb on a teensy 4.1"
+      "description": "Script for testing HM-10 bluetooth on a teensy 4.1"
+    },
+    {
+      "filename": "teensyButtons.ino",
+      "name": "Button Test Script",
+      "description": "Script for testing 4 buttons on a teensy 4.1"
+    },
+    {
+      "filename": "teensyIMU.ino",
+      "name": "IMU Test Script",
+      "description": "Script for testing Adafruit BNO055 IMU on a teensy 4.1"
+    },
+    {
+      "filename": "teensyLCD.ino",
+      "name": "LCD Test Script",
+      "description": "Script for testing a 2x16 I2C LCD screen on a teensy 4.1"
+    },
+    {
+      "filename": "teensyLCDIMU.ino",
+      "name": "IMU on LCD Test Script",
+      "description": "Script to display live IMU data on a 2x16 I2c LCD screen"
     }
   ],
   "folders": [
