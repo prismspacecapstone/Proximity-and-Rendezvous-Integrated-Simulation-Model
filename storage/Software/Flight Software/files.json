@@ -1,0 +1,11 @@
+{
+  "files": [
+    {
+      "filename": "MockSatFlightSoftwarev3.1.ino",
+      "name": "Flight Software",
+      "description": "Flightsoftware for the MockSat"
+    }
+  ],
+  "folders": [
+  ]
+}
