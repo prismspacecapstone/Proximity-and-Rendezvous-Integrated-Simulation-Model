@@ -27,11 +27,11 @@ All the nitty-gritty details that make PRISM tick! From requirements to technica
 
 ```
     [====] ReadMe (You are here)
+    [====] Project Documentation
     [====] User Documentation
     [====] Media
     [====] Software
-    [====] MockSat Drawings
-    [====] Air Table Drawings
+
 ```
 
 ### VIDEOS & DEMOS
