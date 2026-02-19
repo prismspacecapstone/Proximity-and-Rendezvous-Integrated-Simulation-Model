@@ -26,11 +26,12 @@ diving into technical docs, or just want to see some epic visuals, you're in the
 All the nitty-gritty details that make PRISM tick! From requirements to technical specs.
 
 ```
-    [====] System Requirements
-    [====] Design Specifications  
-    [====] Component Datasheets
-    [====] Test Procedures
-    [====] Safety Protocols
+    [====] ReadMe (You are here)
+    [====] User Documentation
+    [====] Media
+    [====] Software
+    [====] MockSat Drawings
+    [====] Air Table Drawings
 ```
 
 ### VIDEOS & DEMOS
@@ -38,9 +39,6 @@ Watch PRISM come to life through our video library.
 
 ```
     [>>] Assembly Timelapse
-    [>>] System Tests & Demos
-    [>>] Team Presentations
-    [>>] Progress Updates
     [>>] Final Showcase
 ```
 
