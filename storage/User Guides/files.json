@@ -1,16 +1,11 @@
 {
   "files": [
     {
-      "filename": "placeholder",
-      "name": "Read Me",
-      "description": "Welcome to PRISM's public documents!"
+      "filename": "MockSat_v3_1_User_Guide.pdf",
+      "name": "MockSat Software User Guide",
+      "description": "Your goto guide for the MockSat software!"
     }
   ],
   "folders": [
-    {
-      "foldername": "placeholder",
-      "name": "Air Table Drawings",
-      "description": "Drawings for the current Air Table"
-    }
   ]
 }
