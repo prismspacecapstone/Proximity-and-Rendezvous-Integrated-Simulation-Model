@@ -7,10 +7,20 @@
     }
   ],
   "folders": [
-        {
+    {
       "foldername": "Component Test Scripts",
       "name": "Component Test Scripts",
       "description": ".ino scripts for testing each individual component"
+    },
+    {
+      "foldername": "Flight Software",
+      "name": "MockSat Flight Software",
+      "description": "MockSat Flight Software"
+    },
+    {
+      "foldername": "GTSS Software",
+      "name": "Ground-Truth Sensing Software",
+      "description": "'Flight' software for the Ground-Truth Sensing System (GTSS)"
     }
   ]
 }
