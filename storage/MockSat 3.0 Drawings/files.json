@@ -49,6 +49,11 @@
       "filename": "PLATE LEVEL 5.pdf",
       "name": "Plate Level 5",
       "description": "Fifth level plate component"
+    },
+    {
+      "filename": "MockSat Wiring Diagram v2.pdf",
+      "name": "Wiring Diagram V2.0",
+      "description": "Electrical Wiring Diagram for the MockSat v3.0"
     }
   ],
   "folders": []
