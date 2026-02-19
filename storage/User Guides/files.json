@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "filename": "placeholder",
+      "name": "Read Me",
+      "description": "Welcome to PRISM's public documents!"
+    }
+  ],
+  "folders": [
+    {
+      "foldername": "placeholder",
+      "name": "Air Table Drawings",
+      "description": "Drawings for the current Air Table"
+    }
+  ]
+}
