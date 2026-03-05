@@ -38,7 +38,7 @@ All the nitty-gritty details that make PRISM tick! From requirements to technica
 Watch PRISM come to life through our video library.
 
 ```
-    [>>] Assembly Timelapse
+    [>>] Progress Pictures and updates!
     [>>] Final Showcase
 ```
 
@@ -65,64 +65,6 @@ A picture is worth a thousand words – we've got lots of pictures!
     +------------------------------------------+
 ```
 
-### FOLDER STRUCTURE - Subject to change
-```
-[ROOT] PRISM-Archive
- |
- +--[DIR] 01-Specifications
- |   |
- |   +--[DIR] Requirements
- |   +--[DIR] Design-Docs
- |   +--[DIR] Datasheets
- |
- +--[DIR] 02-Links
- |   |
- |   +--[FILE] bookmarks.md
- |
- +--[DIR] 03-Videos
- |   |
- |   +--[DIR] Demonstrations
- |   +--[DIR] Presentations
- |   +--[DIR] Tutorials
- |
- +--[DIR] 04-Images
- |   |
- |   +--[DIR] CAD-Renders
- |   +--[DIR] Photos
- |   +--[DIR] Diagrams
- |   +--[DIR] Schematics
- |
- +--[FILE] README.md (You are here!)
-```
-
----
-
-## QUICK START MISSION CHECKLIST
-
-```
-    [ ] Read through the main specification document
-    [ ] Check out the design diagrams
-    [ ] Watch the project overview video
-    [ ] Browse the assembly photos
-    [ ] Bookmark important links
-    [ ] Get inspired and start exploring!
-```
-
----
-
-## PRO TIPS FOR EXPLORERS
-
-```
-    +============================================+
-    |  ** TIP: Use Ctrl+F to search files       |
-    |  ** TIP: Check file dates for latest      |
-    |  ** TIP: Read specs before watching       |
-    |  ** TIP: Keep backups of everything!      |
-    +============================================+
-```
-
----
-
 ## PROJECT INFORMATION
 
 ### TEAM MEMBERS
@@ -143,9 +85,9 @@ A picture is worth a thousand words – we've got lots of pictures!
     [x] Concept Development
     [x] Design Phase
     [x] Prototyping
-    [ ] Testing & Validation
-    [ ] Final Assembly
     [x] Documentation
+    [ ] Final Assembly
+    [ ] Testing & Validation
     [ ] Presentation
 ```
 
@@ -172,7 +114,6 @@ A picture is worth a thousand words – we've got lots of pictures!
     
     Dr. Siwei Fan
     Dr. Matthew Haslam
-    
     ___________________________________________
 
 **MADE BY THE PRISM TEAM**
