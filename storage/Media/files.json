@@ -4,6 +4,26 @@
       "filename": "Prototype Test Rig.jpg",
       "name": "Test Rig",
       "description": "Photo of the first table prototype"
+    },
+    {
+      "filename": "Caulked Airtable.jpg",
+      "name": "Air Table Mid Assmebly",
+      "description": "Photo of mid-production table with caulk applied"
+    },
+    {
+      "filename": "Waterjeted Plate.jpg",
+      "name": "Machined Plate",
+      "description": "Photo of the plate immediately after a 13.5 hour waterjet shift"
+    },
+    {
+      "filename": "Waterjet 1.jpg",
+      "name": "Waterjet 1",
+      "description": "Photo of the waterjet mid-machining the plate"
+    },
+    {
+      "filename": "Waterjet 2.jpg",
+      "name": "Waterjet 2",
+      "description": "Photo of initial plate holes being waterjetted"
     }
   ],
   "folders": [
